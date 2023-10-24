@@ -1,0 +1,469 @@
+---
+title: "R Stats Tuto"
+author: "Pierre-Alexandre"
+date: "2023-10-11"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## *R Markdown*
+
+*This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the YouTube tutorial (in french) <https://www.youtube.com/watch?v=lFdB4fIAcLM>*
+
+*\
+A cheat-sheet can be find here: <https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>*
+
+## *Preparation of the work space*
+
+### *R & RStudio install*
+
+*R & the IDE RStudio can be install from this web page : <https://posit.co/download/rstudio-desktop/>*
+
+1.  *Download then Install R*
+2.  *Download then Install RStudio*
+
+*Cheat-sheet of RStudio : <https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1tpycou*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>*
+
+### *Install package:*
+
+*Packages can be install with the instruction `install.packages()` (Don't forget the`" "`):\
+Example for the `ggplot2` package:*
+
+```{r eval=FALSE}
+# Install from CRAN
+install.packages("ggplot2")
+```
+
+*To see all the packages which are installed with the code below:*
+
+```{r eval=FALSE}
+# Installed packages
+installed.packages()
+```
+
+# The basic
+
+Good resource: <https://bookdown.org/ael/rexplor/>
+
+## Assignation of a variable:
+
+In R, the variable can be assigned with two symbol `<-` OR `=`. But the first one is the most used.\
+To compile a "list" of variable, it is needed to create a vector thanks to `c()` with `,` for the separation.\
+Then thanks with `class` you can see the class of the variable.
+
+```{r}
+x <- 20
+l <- c(10, 44, 89)
+s <- "I am a character"
+bo <- TRUE # a booleen
+
+paste("Variable x:",x)
+class(x)
+paste("Variable l:",l)
+class(l)
+paste("Variable s:", s)
+class(s)
+paste("Variable s:", bo)
+class(bo)
+
+```
+
+*Remarks*\
+The utilization of the vector `c()` do not create a real list but a **vector**.\
+For a list, it is needed to call the function `list`:
+
+```{r}
+li <- list(10, 44, 89)
+li
+class(li)
+```
+
+The vector can not create missed value because all that is useless is not created. Instead of, the list permet the creation with null value:
+
+```{r}
+vector <- c(1, 5, NULL)
+liste <- list(1, 5, "u", NULL)
+vector
+liste
+```
+
+The command `paste()` is for concatenate string and variable. A space is automatically include as a separator. To change it is needed to include the argument `, sep=""` with no space or other symbol. It is possible to used also `paste0`.
+
+For any help, use the command `help()`or the symbol `?`. Example:
+
+```{r eval=FALSE}
+help(class)
+?ggplot2
+```
+
+To remove an object: `rm()`
+
+## Importation of csv file and dataset manipulation
+
+csv files are directly import as a `data.frame`. A data set can be displayed thanks to the command `View`.
+
+```{r eval=FALSE}
+smp <- read.csv2("~/code/R/FUN/fichier 1/smp1.csv")
+View(smp) # With upper V 
+```
+
+To see the 6 first observations for the all variables, use the command `head()`. Use `$`t to access to a variable of a data set:
+
+```{r}
+# Utilisation of the Iris data set, directly included in R
+class(iris)
+head(iris)
+head(iris$Sepal.Length)
+```
+
+The command `which`give the observation who respect the condition:
+
+-   `==` for an equivalence
+-   `!>` for a difference
+-   `<=` / `>=` less/greater than or equal to
+-   `<`/ `>` strictly less/greater than
+-   `&` / `|` AND / OR
+-   `isTRUE(x)` test if X is TRUE
+-   `na.rm=TRUE` to remove the empty values
+
+```{r}
+which(iris$Species != "setosa")
+```
+
+The command `table` group and count each observation for a given variable. The command `subset(data.frame, condition, c(vector of variable))`, take the observation who respect the condition and keep only the variables asked.
+
+```{r}
+table(iris$Species)
+table(iris$Species != "setosa")
+table(subset(iris, Species == "setosa")$Petal.Length > 1.4)
+head(subset(iris, Species == "setosa", c(Sepal.Length, Petal.Length)))
+```
+
+### Make a tibble instead of data.frame
+
+Upload the library ```tibble```. This one allowed the creation of a tibble (table) that it has the same purpose than a data.frame but with more restriction.
+The Tibble must to have the same size for each column.
+
+```{r}
+
+```
+
+**Use the functional programming**
+
+The functional programming is permitted with the ```tibble``` library (and oher *tixxx*). It is a better way to write a comprehensive workflow:
+```{r}
+
+```
+
+### Manipulate 
+
+The libraries ```tibble``` & ```dplyr``` are useful to manipulate a data set.
+
+## Statistics operations
+
+A rapid view of the global statistic descriptor with the command `summary`:
+
+```{r}
+summary(iris)
+```
+
+### *Basic operations:*
+
+```{r}
+sum(iris$Sepal.Length) # Addition of all the observation in the variable
+mean(iris$Sepal.Length) # Average
+sd(iris$Sepal.Length) # Standard deviation
+q <- quantile(iris$Sepal.Length) # Catch all the quantiles 
+q
+q[1]
+length(iris$Sepal.Length) # Number of observation in the variable
+```
+
+### *Confidence interval*
+
+The confidence interval at 95% : $IC=\bar{x}\pm1,96*se$ with:
+
+-   $se$ the standard error ==\> the standard deviation $\sigma$ of the mean
+-   $se=\frac{\sigma}{\sqrt{n}}$ with $n$ the number of observations
+-   The $1.96$ correspond to a quantile $\gamma$ of a normal student law for a confidence $\alpha$ of 95% given by $\gamma=\frac{1-\alpha}{2} = \frac{1-0.95}{2}=0.025$
+-   R can calculate $\gamma$ with: `qnorm(y)` & `qnorm(1-y)`\
+
+```{r}
+y <- (1-0.95)/2
+y
+signif(qnorm(y),3)
+signif(qnorm(1-y),3)
+```
+
+*The standard error is the standard deviation of the mean of distributions and the standard deviation is for the individual distribution of a normal law*
+
+```{r}
+x <- iris$Sepal.Length
+x_N<-length(x)
+x_sd<-sd(x)
+x_mu<-mean(x)
+x_se<-x_sd/sqrt(x_N)
+x_ICmin<-x_mu+x_se*qnorm(0.025)
+x_ICmax<-x_mu+x_se*qnorm(0.975)
+paste(signif(x_ICmin,3),"<",signif(x_mu,3),"<",signif(x_ICmax,3))
+```
+
+The command `signif(variable, number)` print the `variable` with the `number` of significant value asked.
+
+
+# Evaluation of probability law
+
+With R, it is easy to evaluate a probability law:
+
+-   [**r**]{style="color:blue;"}mylaw ==\> Simulate mylaw
+-   [**d**]{style="color:blue;"}mylaw ==\> Calculate the density of mylaw
+-   [**p**]{style="color:blue;"}mylaw ==\> Calculate the cumulative of density function (CDF) of mylaw
+-   [**q**]{style="color:blue;"}mylaw ==\> Calculate the quantile of mylaw\
+
+Example:
+
+*Normal Law (Gauss Law)*
+
+```{r}
+my_mu<-20 # mean value of the normal law
+my_sg<-sqrt(20) # std dev of the normal law
+dnorm(20,mean=my_mu,sd=my_sg) # point evaluation of the density at x=20 of a normal law centered at my_mu and width sigma=my_sg
+pnorm(20,mean=my_mu,sd=my_sg) # point evaluation of the CDF at q=20 of this same normal distribution
+qnorm(0.05,mean=my_mu,sd=my_sg) # quantile of this normal distribution considering a probability p=0.05
+rnorm(10,mean=my_mu,sd=my_sg) # generate 10 random numbers following this normal distribution
+alpha=0.0001 # kind of "type I risk", the part of the plot I want to hide on the left/right sides.
+xmin=qnorm(alpha,mean=my_mu,sd=my_sg) # left value of the range to plot the distribution
+xmax=qnorm(1-alpha,mean=my_mu,sd=my_sg) # right value of the range to plot the distribution
+```
+
+*Binary law*
+
+```{r}
+n<-30 # population
+p<-0.1 # probability of success
+dbinom(x=1,size=n,prob=p) # Probability that I win exactly 1 time in 30 plays
+pbinom(q=2,size=n,prob=p) # CDF, probability to win 0,1 or 2 times in 30 plays
+qbinom(p=0.5,size=n,prob=p) # Quantile of 0.5 from the binomial law
+rbinom(n=10,size=n,prob=p) # Sample of size 10 from the binomial law
+```
+
+*Poisson law*
+
+Described the probability of an event in an interval of time.
+
+```{r}
+n<-30 # number of observation
+m <- 20 #  Poisson law parameter
+dpois(x=1, lambda =m ) #
+ppois(q=2, lambda =m ) # 
+qpois(p=0.5, lambda =m ) # 
+rpois(n=n, lambda =m ) # 
+```
+
+# Graphics
+
+Some graphics can be use in R without package. But they are limited and don't have a lot possibility to manage them. Those graphs can be useful for a first and fast exploration of the data but for a presentation, it must be interested to create more complex/beautful graphs. That why it is better to work with the package `ggplot2`.\
+
+First of all, install the package `ggplot2` then upload it in R thanks to `library` command:
+
+```{r}
+library(ggplot2)
+```
+
+`ggplot2` is defined at least by a **data set**, some **aes,** which represent the "aesthetic" of the graphic, and the type of the graphic thanks to the function **geom.**. The **aes** is defined at least by a **x** and a **y** values. It's possible to add also the **color**, the **fill**, the **group**. Some example will be showed below.
+
+All the addition of function is add thanks the **+**
+
+For more information: <https://bookdown.org/ael/rexplor/chap8.html> (in French)
+
+Graphic can caught in a variable but it is recommended to have one and unique block per graphic:
+
+```{r}
+# A beautiful plot of this normal law CDF
+ggplot()+ # start plot
+  xlim(xmin,xmax)+ # define the range to plot
+  stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg))+ # define the normal law density
+  xlab("x")+ # decoration of the x axis
+  ylab("P(X<=x)")+ # decoration of the y axis
+  labs(title=paste("Normal law CDF - mean=",my_mu,", std dev=",signif(my_sg,3)))+ # title of the plot
+  theme_bw(base_size=12)+ # ...the final touch
+  theme(plot.title = element_text(hjust = 0.5, color = "blue"))
+```
+
+Here `stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg)` is used to draw a function (*the CDF of a normal law in this case*).
+
+## The point_plot:
+
+```{r echo=FALSE}
+
+Ca <- c(113.5,121.7,123.5,131.5,117.8,123.2,114.2,110.9,115.4,119.6,127.7,122.1,135.2,113.7,118, 92, 101, 211)
+
+```
+
+```{r}
+plot(Ca,  
+  type = "p", # type de tracé: points ("p"), lignes ("l"), les deux ("b" ou "o"),
+  col = "blue", # couleur, tapez `colours()` pour la liste complète
+  pch = 4, # type de symboles, un chiffre entre 0 et 25, tapez `?points`
+  cex = 0.5, # taille des symboles
+  lty = 3, # type de lignes, un chiffre entre 1 et 6
+  lwd = 1.2, # taille de lignes
+  ylab = "Ca content", # titre pour l'axe des y
+  main="Exercie 3 of the Statistic lecture")
+abline(h=mean(Ca)+3*sd(Ca), col="red") # Add a line on the graphic
+text(15,200, "3 * Standard Deviation", col="red") # Add a text on the graphic
+```
+
+`abline` & `text` functions can add a line and a text respectively in the graphic.
+
+With `ggplot2` use `geom.point()`:
+
+```{r}
+# Example of data frame
+df_binom<-data.frame(x=c(0:n),p=dbinom(x=c(0:n),size=n,prob=p))
+# Genaration of a graph
+ggplot(data=df_binom)+
+  aes(x=x,y=p)+
+  geom_point()+
+  geom_segment(aes(x=x,y=0,xend=x,yend=p))+
+  theme_light()+
+  xlab("Number of success, x")+
+  ylab("Probability, p")+
+  labs(title=paste("Density of the binomial law, size=",n,", prob=",p))
+```
+
+## The Barplot
+
+Basic R code for to generate a barplot of a Poison law:
+
+```{r}
+barplot(rpois(100, lambda = m))
+
+```
+
+With `ggplot2` use `geom.histogram()`:
+
+```{r}
+ggplot(iris, aes(x = Species, y = Sepal.Length))+
+  geom_bar(stat = "identity")+
+  theme_test()
+
+```
+
+It is possible to have multigroup in the barplot. It's just needed to add the parameter `fill = group2` in the `aes()`. By default the group are stacked. To have the barplot side by side, add `position=position_dodge()` in the `geom_bar` parameter.
+
+More complicate, the case of 2 continue variables y. It is not possible at this step with `geom_bar` function, which allow only one x for one y. To solve this issue, it's needed to reorganized the data to transform a table with y columns to a table with only two columns. This transformation can be done with the function `gather(data, key, value, columns_to_gather)` of the library `tidyr`.
+
+-   **data** ==\> data frame, example iris
+-   **key** ==\> name of the group
+-   **value** ==\> name of the y axis
+-   **columns_to_gather** ==\> y variables of the original data frame that it needed to be merged, separate by `,`\
+
+```{r}
+library(tidyr)
+reformat <- gather(iris, key = "Part_flower", value = "Length", Sepal.Length, Petal.Length)
+head(reformat)
+
+ggplot(reformat, aes(x = Species, y = Length, fill=Part_flower))+
+  geom_bar(stat = "identity", position=position_dodge())+
+  theme_test()
+```
+
+More inspiring barplot : <https://www.datanovia.com/en/fr/lessons/ggplot-barplot/>
+
+*Remark: it is not the best graph to describe the iris database*
+
+## The Histogram
+
+Basic R code for to generate an histogram of a nominal law:
+
+```{r}
+hist(rnorm(100,mean=my_mu,sd=my_sg), freq=F) 
+curve(dnorm(x,mean=my_mu,sd=my_sg),from = xmin,to = xmax,ylab="densité",add=T,col="red")
+```
+
+With `ggplot2` use `geom.histogram()`:
+
+```{r}
+data <- data.frame(x = rnorm(100,mean=my_mu,sd=my_sg))
+ggplot(data, aes(x))+
+  geom_histogram(aes (y=after_stat(density)), #after_stat(density) normalize to 1
+                 fill = "grey",
+                 color = "black",
+                 bins = 50)+ # bins number of interval un the histogram
+  stat_function(fun=dnorm,args=c(mean=my_mu,sd=my_sg),
+                color ="red", 
+                size = 0.1)+
+  xlim(xmin,xmax)+
+  theme_bw()
+
+```
+
+## The box-plot
+
+The boxplot can represent the distribution of the observation in function of the group. It gives also the quantile, the mean and the median information.
+
+The easyiest way to have a boxplot is to use the basic R command: `boxplot(quantitative_variable~quatative_variable, labels)`. Between the quantitative_variable & the quantative_variable there is a (**\~**).\
+Example:
+
+```{r eval = FALSE}
+boxplot(iris$Sepal.Length~iris$Species,ylab="Sepal Length",xlab="Species")
+```
+
+With `ggplot2` use `geom.boxplot()`:
+
+```{r}
+p <- ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+
+  ylim(4,8)+
+  ylab("Sepal Length")+ 
+  geom_boxplot(alpha=0.7, #alpha for the transparence,
+               outlier.colour="red",
+               outlier.shape=8,outlier.size=4) +
+  stat_summary(fun = mean, geom="point", shape=20, size=8, color="Yellow") +
+  geom_point(position="jitter", color="blue", alpha=.5)+
+  scale_fill_brewer(palette="Set2")+
+  theme_classic()
+p
+```
+
+The function `stat_summary(fun.y = mean)` display the mean value.\
+
+## Multiple grahs
+
+As it is showed, it is possible to combine several graphic in one by addition of `goem` functions. But sometimes, it is needed to separate the graphics. It is called the faceting. Two function can be used:
+
+-   `facet_warp(qualitative_variable, nrow = number of ligne)`
+-   `facet_grid(ligne ~column)`
+
+```{r}
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, shape = Species, color=Species))+
+  theme_bw()+
+  geom_smooth(method="lm", formula= y~poly(x,3), se=TRUE, size = 0.5) +
+  geom_point() +
+  facet_wrap(iris$Species, nrow = 2)
+```
+
+```{r}
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, shape = Species, color = Species))+
+  theme_bw()+
+  geom_point() + 
+  facet_grid(~Species)
+```
+
+In the first facing graph, the function ```geom_smooth(method="lm", formula= y\~poly(x,3), se=TRUE, size = 0.5)``` has been introduced. This function is used to add a smooth regression curve to show the general trend of the dataset. Here the method used to draw this curve is a fitting linear model **lm.**
+
+For more inspired graphs:\
+<https://rstudio-pubs-static.s3.amazonaws.com/578122_5e69256788bb4dcca6157d2bcfa7694e.html>\
+<https://www.charlesbordet.com/fr/faire-beaux-graphiques-ggplot2/#it%C3%A9ration-4---ajouter-des-couleurs-pour-chaque-groupe>\
+
+# Statistics Test
+
+voir les library ```moment``` 
+kurtosis
+skweness
+
