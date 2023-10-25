@@ -11,6 +11,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+********************************************************************************
+
 ## *R Markdown*
 
 *This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the YouTube tutorial (in french) <https://www.youtube.com/watch?v=lFdB4fIAcLM>*
@@ -39,12 +41,15 @@ Example for the `ggplot2` package:*
 install.packages("ggplot2")
 ```
 
-*To see all the packages which are installed with the code below:*
+*To see all the packages which are installed use the code below:*
 
 ```{r eval=FALSE}
 # Installed packages
 installed.packages()
 ```
+
+
+********************************************************************************
 
 # The basic
 
@@ -83,7 +88,7 @@ li
 class(li)
 ```
 
-The vector can not create missed value because all that is useless is not created. Instead of, the list permet the creation with null value:
+The vector can not create missed value because all that is useless is not created. Instead of, the list permit the creation with null value:
 
 ```{r}
 vector <- c(1, 5, NULL)
@@ -92,7 +97,7 @@ vector
 liste
 ```
 
-The command `paste()` is for concatenate string and variable. A space is automatically include as a separator. To change it is needed to include the argument `, sep=""` with no space or other symbol. It is possible to used also `paste0`.
+The command `paste()` is used to concatenate string and variable. A space is automatically include as separator. To change it, add the argument `, sep=""` with no space or other symbol. It is possible to used also `paste0`.
 
 For any help, use the command `help()`or the symbol `?`. Example:
 
@@ -103,7 +108,9 @@ help(class)
 
 To remove an object: `rm()`
 
-## Importation of csv file and dataset manipulation
+## Dataset Manipulation
+
+### Importation of csv file
 
 csv files are directly import as a `data.frame`. A data set can be displayed thanks to the command `View`.
 
@@ -112,7 +119,9 @@ smp <- read.csv2("~/code/R/FUN/fichier 1/smp1.csv")
 View(smp) # With upper V 
 ```
 
-To see the 6 first observations for the all variables, use the command `head()`. Use `$`t to access to a variable of a data set:
+### Some basic manipulations
+
+To see the 6 first observations for the all variables, use the command `head()`. Use `$` to access to a variable of a data set:
 
 ```{r}
 # Utilisation of the Iris data set, directly included in R
@@ -144,25 +153,68 @@ table(subset(iris, Species == "setosa")$Petal.Length > 1.4)
 head(subset(iris, Species == "setosa", c(Sepal.Length, Petal.Length)))
 ```
 
-### Make a tibble instead of data.frame
+### Make a *tibble* instead of *data.frame*
 
-Upload the library ```tibble```. This one allowed the creation of a tibble (table) that it has the same purpose than a data.frame but with more restriction.
-The Tibble must to have the same size for each column.
+Upload the library `tibble`. This one allowed the creation of a *tibble* (table) that it has the same purpose than a *data.frame* but with more restriction. The *tibble* must to have the same size for each column.
 
 ```{r}
-
+library(tibble)
+# creation of the dataset
+# m1 a list with Null values
+m1<-list(1.311,1.287,1.293,1.308,1.291,1.300,1.274,1.287)
+m1 <- append(m1, vector("list",5)) # append 5 element NULL contain in a list
+m2<-c(1.298,1.309,1.293,1.251,1.338,1.302,1.270,1.339,1.346,1.292,1.291,1.321,1.285)
+Si<-tibble(method1=m1,method2=m2)
+Si
 ```
 
 **Use the functional programming**
 
-The functional programming is permitted with the ```tibble``` library (and oher *tixxx*). It is a better way to write a comprehensive workflow:
-```{r}
+The functional programming is a paradigm of building computer program with a declarative type. In this case, the programs are constructed by applying and composing functions.  In R the `tibble` library (and other *tixxx*) allow this kind programation with the following construction `variable %>% function()`. The functional is a better way to write a comprehensive workflow:
 
+
+```{r}
+# recover a list containing the values of method 1 padded with NULL values then converted to a vector, without NULL values
+m1<-Si$method1 %>% unlist()
+m1
+class(m1)
 ```
 
-### Manipulate 
+### Manipulation
 
-The libraries ```tibble``` & ```dplyr``` are useful to manipulate a data set.
+The libraries `tidyr` & `dplyr` are useful to manipulate a data set.
+
+For example, in the first table, it is supposed that each samples have been measured with the both two methods:
+
+-   sample 1 : value m1 / value m2
+-   sample 2 : value m1 / value m2
+-   ...
+
+In this case, measurements have been performed independently of the samples. So the first table does not work. So here it will be better that each value receive tag corresponding to its origin (method1 / method2). The code below propose this kind of table:
+
+```{r}
+library(dplyr, tidyr)
+Si2<-tibble(method=c(rep("method1",8),rep("method2",13)),values=c(m1,m2))
+
+# Let's simulate a randomized acquisition of the dataset
+Si2<-Si2[sample(nrow(Si2)),] # Indexes are generated by random pick, the tibble is shuffled
+head(Si2)
+```
+
+**Play with `tidyr` & `dplyr` libraries and functional programming**
+
+```{r}
+m1b<-Si2 %>% filter(method == "method1") %>% select(values) %>% unlist()
+m1
+m1b
+```
+
+Cheat-sheet for more information on those libraries:
+
+<https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>
+
+********************************************************************************
+
 
 ## Statistics operations
 
@@ -215,7 +267,6 @@ paste(signif(x_ICmin,3),"<",signif(x_mu,3),"<",signif(x_ICmax,3))
 
 The command `signif(variable, number)` print the `variable` with the `number` of significant value asked.
 
-
 # Evaluation of probability law
 
 With R, it is easy to evaluate a probability law:
@@ -264,6 +315,9 @@ ppois(q=2, lambda =m ) #
 qpois(p=0.5, lambda =m ) # 
 rpois(n=n, lambda =m ) # 
 ```
+
+********************************************************************************
+
 
 # Graphics
 
@@ -455,15 +509,15 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, shape = Species, color = Species
   facet_grid(~Species)
 ```
 
-In the first facing graph, the function ```geom_smooth(method="lm", formula= y\~poly(x,3), se=TRUE, size = 0.5)``` has been introduced. This function is used to add a smooth regression curve to show the general trend of the dataset. Here the method used to draw this curve is a fitting linear model **lm.**
+In the first facing graph, the function `geom_smooth(method="lm", formula= y\~poly(x,3), se=TRUE, size = 0.5)` has been introduced. This function is used to add a smooth regression curve to show the general trend of the dataset. Here the method used to draw this curve is a fitting linear model **lm.**
 
 For more inspired graphs:\
 <https://rstudio-pubs-static.s3.amazonaws.com/578122_5e69256788bb4dcca6157d2bcfa7694e.html>\
 <https://www.charlesbordet.com/fr/faire-beaux-graphiques-ggplot2/#it%C3%A9ration-4---ajouter-des-couleurs-pour-chaque-groupe>\
 
+********************************************************************************
+
+
 # Statistics Test
 
-voir les library ```moment``` 
-kurtosis
-skweness
-
+voir la library `moment` kurtosis skweness
