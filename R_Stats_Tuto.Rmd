@@ -165,12 +165,11 @@ m1<-list(1.311,1.287,1.293,1.308,1.291,1.300,1.274,1.287)
 m1 <- append(m1, vector("list",5)) # append 5 element NULL contain in a list
 m2<-c(1.298,1.309,1.293,1.251,1.338,1.302,1.270,1.339,1.346,1.292,1.291,1.321,1.285)
 Si<-tibble(method1=m1,method2=m2)
-Si
 ```
 
 **Use the functional programming**
 
-The functional programming is a paradigm of building computer program with a declarative type. In this case, the programs are constructed by applying and composing functions.  In R the `tibble` library (and other *tixxx*) allow this kind programation with the following construction `variable %>% function()`. The functional is a better way to write a comprehensive workflow:
+The functional programming is a paradigm of building computer program with a declarative type. In this case, the programs are constructed by applying and composing functions.  In R the `tibble` library (and other *tixxx*) allow this kind programming with the following construction `variable %>% function()`. The functional is a better way to write a comprehensive workflow:
 
 
 ```{r}
@@ -212,8 +211,6 @@ m1b
 Cheat-sheet for more information on those libraries:
 
 <https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>
-
-********************************************************************************
 
 
 ## Statistics operations
@@ -266,6 +263,9 @@ paste(signif(x_ICmin,3),"<",signif(x_mu,3),"<",signif(x_ICmax,3))
 ```
 
 The command `signif(variable, number)` print the `variable` with the `number` of significant value asked.
+
+********************************************************************************
+
 
 # Evaluation of probability law
 
