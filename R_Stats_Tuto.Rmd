@@ -11,7 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-********************************************************************************
+------------------------------------------------------------------------
 
 ## *R Markdown*
 
@@ -48,18 +48,34 @@ install.packages("ggplot2")
 installed.packages()
 ```
 
+**Use a package**
 
-********************************************************************************
+After the installation of the desired package, it is neceesary to upload it in R thanks to `library` command:
+
+```{R eval =FALSE}
+library("ggplot2", "tibble")
+```
+
+An other way consist to put all the library desired in a variable thank to a vector (see below), then upload it with the function `lapply` as it is showed below:
+
+```{R eval =FALSE}
+x <- c("readr","tibble","tidyr","ggplot2","dplyr","gridExtra", "pracma", "factoextra", "FactoMineR", "Cairo", "Rtsne", 
+       "colorspace","dendextend", "RColorBrewer", "ggthemes","ggpubr", "readxl", "pspline", "randomForest", "lattice",
+       "caret", "LiblineaR")
+lapply(x,require,character.only = T)
+```
+
+------------------------------------------------------------------------
 
 # The basic
 
-Good resource: <https://bookdown.org/ael/rexplor/>
+Good resources: <https://bookdown.org/ael/rexplor/>
 
 ## Assignation of a variable:
 
 In R, the variable can be assigned with two symbol `<-` OR `=`. But the first one is the most used.\
 To compile a "list" of variable, it is needed to create a vector thanks to `c()` with `,` for the separation.\
-Then thanks with `class` you can see the class of the variable.
+Then thanks to the funtion `class` you can see the class of the variable.
 
 ```{r}
 x <- 20
@@ -106,7 +122,11 @@ help(class)
 ?ggplot2
 ```
 
-To remove an object: `rm()`
+To remove an object: `rm()`. At the begining of a session/project, it can be usefull to clean all the data which was kept by RSudio in its memory:
+
+```{r eval = FALSE}
+rm(list = ls())
+```
 
 ## Dataset Manipulation
 
@@ -169,8 +189,7 @@ Si<-tibble(method1=m1,method2=m2)
 
 **Use the functional programming**
 
-The functional programming is a paradigm of building computer program with a declarative type. In this case, the programs are constructed by applying and composing functions.  In R the `tibble` library (and other *tixxx*) allow this kind programming with the following construction `variable %>% function()`. The functional is a better way to write a comprehensive workflow:
-
+The functional programming is a paradigm of building computer program with a declarative type. In this case, the programs are constructed by applying and composing functions. In R the `tibble` library (and other *tixxx*) allow this kind programming with the following construction `variable %>% function()`. The functional is a better way to write a comprehensive workflow:
 
 ```{r}
 # recover a list containing the values of method 1 padded with NULL values then converted to a vector, without NULL values
@@ -212,10 +231,9 @@ Cheat-sheet for more information on those libraries:
 
 <https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>
 
-
 ## Statistics operations
 
-A rapid view of the global statistic descriptor with the command `summary`:
+A rapid view of the global statistic descriptor with the function `summary`:
 
 ```{r}
 summary(iris)
@@ -238,7 +256,7 @@ length(iris$Sepal.Length) # Number of observation in the variable
 The confidence interval at 95% : $IC=\bar{x}\pm1,96*se$ with:
 
 -   $se$ the standard error ==\> the standard deviation $\sigma$ of the mean
--   $se=\frac{\sigma}{\sqrt{n}}$ with $n$ the number of observations
+-   $se=\frac{\sigma}{\sqrt{n-1}}$ with $n$ the number of observations
 -   The $1.96$ correspond to a quantile $\gamma$ of a normal student law for a confidence $\alpha$ of 95% given by $\gamma=\frac{1-\alpha}{2} = \frac{1-0.95}{2}=0.025$
 -   R can calculate $\gamma$ with: `qnorm(y)` & `qnorm(1-y)`\
 
@@ -264,8 +282,7 @@ paste(signif(x_ICmin,3),"<",signif(x_mu,3),"<",signif(x_ICmax,3))
 
 The command `signif(variable, number)` print the `variable` with the `number` of significant value asked.
 
-********************************************************************************
-
+------------------------------------------------------------------------
 
 # Evaluation of probability law
 
@@ -292,7 +309,9 @@ xmin=qnorm(alpha,mean=my_mu,sd=my_sg) # left value of the range to plot the dist
 xmax=qnorm(1-alpha,mean=my_mu,sd=my_sg) # right value of the range to plot the distribution
 ```
 
-*Binary law*
+*Binomial law*
+
+The Binary law can be positive or negative, but in the general cases, it is only the positie which is used. This is the law which is followed by a randomization selection when there are **ONLY TWO** possibility of results: A or B, alive or died. The probability to obtained each evenment must be constant (but not necessary egal). The probability to obtain the A event will be  $p$ and B will be $q=(1-p)$. So, with $n$ selection, the probability to obtain the A event $P(X=k)$ will follow the binomial law $B(n,p)$. The mean $\mu$ correspond to the esperance (the infinity selection) and wil be give by $\mu=np$.
 
 ```{r}
 n<-30 # population
@@ -316,8 +335,7 @@ qpois(p=0.5, lambda =m ) #
 rpois(n=n, lambda =m ) # 
 ```
 
-********************************************************************************
-
+------------------------------------------------------------------------
 
 # Graphics
 
@@ -515,9 +533,12 @@ For more inspired graphs:\
 <https://rstudio-pubs-static.s3.amazonaws.com/578122_5e69256788bb4dcca6157d2bcfa7694e.html>\
 <https://www.charlesbordet.com/fr/faire-beaux-graphiques-ggplot2/#it%C3%A9ration-4---ajouter-des-couleurs-pour-chaque-groupe>\
 
-********************************************************************************
-
+------------------------------------------------------------------------
 
 # Statistics Test
+
+## Test de **Student**
+
+## Test de **Fisher**
 
 voir la library `moment` kurtosis skweness
