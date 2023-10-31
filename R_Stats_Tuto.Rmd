@@ -17,8 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 *This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the YouTube tutorial (in french) <https://www.youtube.com/watch?v=lFdB4fIAcLM>*
 
-*\
-A cheat-sheet can be find here: <https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>*
+*A cheat-sheet can be find here: <https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>*
 
 ## *Preparation of the work space*
 
@@ -208,7 +207,7 @@ For example, in the first table, it is supposed that each samples have been meas
 -   sample 2 : value m1 / value m2
 -   ...
 
-In this case, measurements have been performed independently of the samples. So the first table does not work. So here it will be better that each value receive tag corresponding to its origin (method1 / method2). The code below propose this kind of table:
+In this case, measurements have been performed independently of the samples. So the first table does not work. Here it will be better that each value receive tag corresponding to its origin (method1 or method2). The code below propose this kind of table:
 
 ```{r}
 library(dplyr, tidyr)
@@ -239,6 +238,8 @@ A rapid view of the global statistic descriptor with the function `summary`:
 summary(iris)
 ```
 
+*Note: iris is a dataset which is already include in R*
+
 ### *Basic operations:*
 
 ```{r}
@@ -267,7 +268,7 @@ signif(qnorm(y),3)
 signif(qnorm(1-y),3)
 ```
 
-*The standard error is the standard deviation of the mean of distributions and the standard deviation is for the individual distribution of a normal law*
+*The standard error is the standard deviation of the mean of distributions and the standard deviation is for the individual distribution of a normal law.*
 
 ```{r}
 x <- iris$Sepal.Length
@@ -291,11 +292,11 @@ With R, it is easy to evaluate a probability law:
 -   [**r**]{style="color:blue;"}mylaw ==\> Simulate mylaw
 -   [**d**]{style="color:blue;"}mylaw ==\> Calculate the density of mylaw
 -   [**p**]{style="color:blue;"}mylaw ==\> Calculate the cumulative of density function (CDF) of mylaw
--   [**q**]{style="color:blue;"}mylaw ==\> Calculate the quantile of mylaw\
+-   [**q**]{style="color:blue;"}mylaw ==\> Calculate the quantile of mylaw
 
-Example:
+Below the 3 mains laws:
 
-*Normal Law (Gauss Law)*
+## *Normal Law (Gauss Law)*
 
 ```{r}
 my_mu<-20 # mean value of the normal law
@@ -309,9 +310,9 @@ xmin=qnorm(alpha,mean=my_mu,sd=my_sg) # left value of the range to plot the dist
 xmax=qnorm(1-alpha,mean=my_mu,sd=my_sg) # right value of the range to plot the distribution
 ```
 
-*Binomial law*
+## *Binomial law*
 
-The Binary law can be positive or negative, but in the general cases, it is only the positie which is used. This is the law which is followed by a randomization selection when there are **ONLY TWO** possibility of results: A or B, alive or died. The probability to obtained each evenment must be constant (but not necessary egal). The probability to obtain the A event will be  $p$ and B will be $q=(1-p)$. So, with $n$ selection, the probability to obtain the A event $P(X=k)$ will follow the binomial law $B(n,p)$. The mean $\mu$ correspond to the esperance (the infinity selection) and wil be give by $\mu=np$.
+The Binary law can be positive or negative, but in the general cases, it is only the positive which is used. This is the law which is followed by a randomization selection when there are **ONLY TWO** possibility of results: A or B, alive or died. The probability to obtained each evenement must be constant (but not necessary equal). The probability to obtain the A event will be $p$ and B will be $q=(1-p)$. So, with $n$ selection, the probability to obtain k event of A $\mathbb{P}(X=k)$ will follow the binomial law $B(n,p)$. The mean $\mu$ correspond to the expectation $\mathbb{E}$ (*espérance in french*) and will be give by $\mu=np$. the variance is given by $var=npq$.
 
 ```{r}
 n<-30 # population
@@ -322,9 +323,15 @@ qbinom(p=0.5,size=n,prob=p) # Quantile of 0.5 from the binomial law
 rbinom(n=10,size=n,prob=p) # Sample of size 10 from the binomial law
 ```
 
-*Poisson law*
+The formula of the binomial law is:
 
-Described the probability of an event in an interval of time.
+$$\mathbb{P}(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$
+
+Where $\binom{n}{k}$ is the binomial coefficient (n choose k) and can be calculate with the command `choose(n,k)` or by $\binom{n}{k} =C_n^{k}= \frac{n!}{k!(n-k)!}$
+
+## *Poisson law*
+
+The Poisson law is used to described the probability of a rare event in an interval of time. It is an approximation of the binomial law when the when $p$ tends to zero (very law probability) and $n$ tends to $\infty$ (a lot of repetition). This law take the parameter $\lambda = np$ and traduce the the expectation $\mathbb{E}$ and the variance (which is logical since $p\rightarrow0\Rightarrow q\rightarrow1$ in the binomial law). That's why the Poisson law is define by $P(\lambda)$ and represent the mean of the probability where the rare event $k$ is realized.
 
 ```{r}
 n<-30 # number of observation
@@ -335,11 +342,19 @@ qpois(p=0.5, lambda =m ) #
 rpois(n=n, lambda =m ) # 
 ```
 
+The formaula of the Poisson law is: $$\mathbb{P}(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}$$
+
+*Note: factorial calculation in R:*
+
+```{r}
+factorial(5)
+```
+
 ------------------------------------------------------------------------
 
 # Graphics
 
-Some graphics can be use in R without package. But they are limited and don't have a lot possibility to manage them. Those graphs can be useful for a first and fast exploration of the data but for a presentation, it must be interested to create more complex/beautful graphs. That why it is better to work with the package `ggplot2`.\
+Some graphics can be use in R without package. But they are limited and don't have a lot possibility to manage them. Those graphs can be useful for a first and fast exploration of the data but for a presentation, it must be interested to create more complex/beautful graphs. That why it is better to work with the package `ggplot2`.
 
 First of all, install the package `ggplot2` then upload it in R thanks to `library` command:
 
