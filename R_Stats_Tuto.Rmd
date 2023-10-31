@@ -3,8 +3,10 @@ title: "R Stats Tuto"
 author: "Pierre-Alexandre"
 date: "2023-10-11"
 output:
+  word_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}

@@ -1,0 +1,1430 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={R Stats Tuto},
+  pdfauthor={Pierre-Alexandre},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{R Stats Tuto}
+\author{Pierre-Alexandre}
+\date{2023-10-11}
+
+\begin{document}
+\maketitle
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{r-markdown}{%
+\subsection{\texorpdfstring{\emph{R
+Markdown}}{R Markdown}}\label{r-markdown}}
+
+\emph{This is an R Markdown document. Markdown is a simple formatting
+syntax for authoring HTML, PDF, and MS Word documents. For more details
+on using R Markdown see \url{http://rmarkdown.rstudio.com} or the
+YouTube tutorial (in french)
+\url{https://www.youtube.com/watch?v=lFdB4fIAcLM}}
+
+\emph{A cheat-sheet can be find here:
+\url{https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..}}
+
+\hypertarget{preparation-of-the-work-space}{%
+\subsection{\texorpdfstring{\emph{Preparation of the work
+space}}{Preparation of the work space}}\label{preparation-of-the-work-space}}
+
+\hypertarget{r-rstudio-install}{%
+\subsubsection{\texorpdfstring{\emph{R \& RStudio
+install}}{R \& RStudio install}}\label{r-rstudio-install}}
+
+\emph{R \& the IDE RStudio can be install from this web page :
+\url{https://posit.co/download/rstudio-desktop/}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \emph{Download then Install R}
+\item
+  \emph{Download then Install RStudio}
+\end{enumerate}
+
+\emph{Cheat-sheet of RStudio :
+\url{https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1tpycou*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..}}
+
+\hypertarget{install-package}{%
+\subsubsection{\texorpdfstring{\emph{Install
+package:}}{Install package:}}\label{install-package}}
+
+\emph{Packages can be install with the instruction
+\texttt{install.packages()} (Don't forget the\texttt{"\ "}):\\
+Example for the \texttt{ggplot2} package:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Install from CRAN}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{To see all the packages which are installed use the code below:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Installed packages}
+\FunctionTok{installed.packages}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Use a package}
+
+After the installation of the desired package, it is neceesary to upload
+it in R thanks to \texttt{library} command:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"tibble"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+An other way consist to put all the library desired in a variable thank
+to a vector (see below), then upload it with the function
+\texttt{lapply} as it is showed below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"readr"}\NormalTok{,}\StringTok{"tibble"}\NormalTok{,}\StringTok{"tidyr"}\NormalTok{,}\StringTok{"ggplot2"}\NormalTok{,}\StringTok{"dplyr"}\NormalTok{,}\StringTok{"gridExtra"}\NormalTok{, }\StringTok{"pracma"}\NormalTok{, }\StringTok{"factoextra"}\NormalTok{, }\StringTok{"FactoMineR"}\NormalTok{, }\StringTok{"Cairo"}\NormalTok{, }\StringTok{"Rtsne"}\NormalTok{, }
+       \StringTok{"colorspace"}\NormalTok{,}\StringTok{"dendextend"}\NormalTok{, }\StringTok{"RColorBrewer"}\NormalTok{, }\StringTok{"ggthemes"}\NormalTok{,}\StringTok{"ggpubr"}\NormalTok{, }\StringTok{"readxl"}\NormalTok{, }\StringTok{"pspline"}\NormalTok{, }\StringTok{"randomForest"}\NormalTok{, }\StringTok{"lattice"}\NormalTok{,}
+       \StringTok{"caret"}\NormalTok{, }\StringTok{"LiblineaR"}\NormalTok{)}
+\FunctionTok{lapply}\NormalTok{(x,require,}\AttributeTok{character.only =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{the-basic}{%
+\section{The basic}\label{the-basic}}
+
+Good resources: \url{https://bookdown.org/ael/rexplor/}
+
+\hypertarget{assignation-of-a-variable}{%
+\subsection{Assignation of a
+variable:}\label{assignation-of-a-variable}}
+
+In R, the variable can be assigned with two symbol \texttt{\textless{}-}
+OR \texttt{=}. But the first one is the most used.\\
+To compile a ``list'' of variable, it is needed to create a vector
+thanks to \texttt{c()} with \texttt{,} for the separation.\\
+Then thanks to the funtion \texttt{class} you can see the class of the
+variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{20}
+\NormalTok{l }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{44}\NormalTok{, }\DecValTok{89}\NormalTok{)}
+\NormalTok{s }\OtherTok{\textless{}{-}} \StringTok{"I am a character"}
+\NormalTok{bo }\OtherTok{\textless{}{-}} \ConstantTok{TRUE} \CommentTok{\# a booleen}
+
+\FunctionTok{paste}\NormalTok{(}\StringTok{"Variable x:"}\NormalTok{,x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Variable x: 20"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste}\NormalTok{(}\StringTok{"Variable l:"}\NormalTok{,l)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Variable l: 10" "Variable l: 44" "Variable l: 89"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(l)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste}\NormalTok{(}\StringTok{"Variable s:"}\NormalTok{, s)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Variable s: I am a character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(s)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste}\NormalTok{(}\StringTok{"Variable s:"}\NormalTok{, bo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Variable s: TRUE"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(bo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "logical"
+\end{verbatim}
+
+\emph{Remarks}\\
+The utilization of the vector \texttt{c()} do not create a real list but
+a \textbf{vector}.\\
+For a list, it is needed to call the function \texttt{list}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{li }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{44}\NormalTok{, }\DecValTok{89}\NormalTok{)}
+\NormalTok{li}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 10
+## 
+## [[2]]
+## [1] 44
+## 
+## [[3]]
+## [1] 89
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(li)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "list"
+\end{verbatim}
+
+The vector can not create missed value because all that is useless is
+not created. Instead of, the list permit the creation with null value:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vector }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\ConstantTok{NULL}\NormalTok{)}
+\NormalTok{liste }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\StringTok{"u"}\NormalTok{, }\ConstantTok{NULL}\NormalTok{)}
+\NormalTok{vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{liste}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 1
+## 
+## [[2]]
+## [1] 5
+## 
+## [[3]]
+## [1] "u"
+## 
+## [[4]]
+## NULL
+\end{verbatim}
+
+The command \texttt{paste()} is used to concatenate string and variable.
+A space is automatically include as separator. To change it, add the
+argument \texttt{,\ sep=""} with no space or other symbol. It is
+possible to used also \texttt{paste0}.
+
+For any help, use the command \texttt{help()}or the symbol \texttt{?}.
+Example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help}\NormalTok{(class)}
+\NormalTok{?ggplot2}
+\end{Highlighting}
+\end{Shaded}
+
+To remove an object: \texttt{rm()}. At the begining of a
+session/project, it can be usefull to clean all the data which was kept
+by RSudio in its memory:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list =} \FunctionTok{ls}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dataset-manipulation}{%
+\subsection{Dataset Manipulation}\label{dataset-manipulation}}
+
+\hypertarget{importation-of-csv-file}{%
+\subsubsection{Importation of csv file}\label{importation-of-csv-file}}
+
+csv files are directly import as a \texttt{data.frame}. A data set can
+be displayed thanks to the command \texttt{View}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{smp }\OtherTok{\textless{}{-}} \FunctionTok{read.csv2}\NormalTok{(}\StringTok{"\textasciitilde{}/code/R/FUN/fichier 1/smp1.csv"}\NormalTok{)}
+\FunctionTok{View}\NormalTok{(smp) }\CommentTok{\# With upper V }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{some-basic-manipulations}{%
+\subsubsection{Some basic
+manipulations}\label{some-basic-manipulations}}
+
+To see the 6 first observations for the all variables, use the command
+\texttt{head()}. Use \texttt{\$} to access to a variable of a data set:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Utilisation of the Iris data set, directly included in R}
+\FunctionTok{class}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "data.frame"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.1 4.9 4.7 4.6 5.0 5.4
+\end{verbatim}
+
+The command \texttt{which}give the observation who respect the
+condition:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{==} for an equivalence
+\item
+  \texttt{!\textgreater{}} for a difference
+\item
+  \texttt{\textless{}=} / \texttt{\textgreater{}=} less/greater than or
+  equal to
+\item
+  \texttt{\textless{}}/ \texttt{\textgreater{}} strictly less/greater
+  than
+\item
+  \texttt{\&} / \texttt{\textbar{}} AND / OR
+\item
+  \texttt{isTRUE(x)} test if X is TRUE
+\item
+  \texttt{na.rm=TRUE} to remove the empty values
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{which}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Species }\SpecialCharTok{!=} \StringTok{"setosa"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1]  51  52  53  54  55  56  57  58  59  60  61  62  63  64  65  66  67  68
+##  [19]  69  70  71  72  73  74  75  76  77  78  79  80  81  82  83  84  85  86
+##  [37]  87  88  89  90  91  92  93  94  95  96  97  98  99 100 101 102 103 104
+##  [55] 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122
+##  [73] 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140
+##  [91] 141 142 143 144 145 146 147 148 149 150
+\end{verbatim}
+
+The command \texttt{table} group and count each observation for a given
+variable. The command
+\texttt{subset(data.frame,\ condition,\ c(vector\ of\ variable))}, take
+the observation who respect the condition and keep only the variables
+asked.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##     setosa versicolor  virginica 
+##         50         50         50
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Species }\SpecialCharTok{!=} \StringTok{"setosa"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## FALSE  TRUE 
+##    50   100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(}\FunctionTok{subset}\NormalTok{(iris, Species }\SpecialCharTok{==} \StringTok{"setosa"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Petal.Length }\SpecialCharTok{\textgreater{}} \FloatTok{1.4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## FALSE  TRUE 
+##    24    26
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{subset}\NormalTok{(iris, Species }\SpecialCharTok{==} \StringTok{"setosa"}\NormalTok{, }\FunctionTok{c}\NormalTok{(Sepal.Length, Petal.Length)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Sepal.Length Petal.Length
+## 1          5.1          1.4
+## 2          4.9          1.4
+## 3          4.7          1.3
+## 4          4.6          1.5
+## 5          5.0          1.4
+## 6          5.4          1.7
+\end{verbatim}
+
+\hypertarget{make-a-tibble-instead-of-data.frame}{%
+\subsubsection{\texorpdfstring{Make a \emph{tibble} instead of
+\emph{data.frame}}{Make a tibble instead of data.frame}}\label{make-a-tibble-instead-of-data.frame}}
+
+Upload the library \texttt{tibble}. This one allowed the creation of a
+\emph{tibble} (table) that it has the same purpose than a
+\emph{data.frame} but with more restriction. The \emph{tibble} must to
+have the same size for each column.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tibble)}
+\CommentTok{\# creation of the dataset}
+\CommentTok{\# m1 a list with Null values}
+\NormalTok{m1}\OtherTok{\textless{}{-}}\FunctionTok{list}\NormalTok{(}\FloatTok{1.311}\NormalTok{,}\FloatTok{1.287}\NormalTok{,}\FloatTok{1.293}\NormalTok{,}\FloatTok{1.308}\NormalTok{,}\FloatTok{1.291}\NormalTok{,}\FloatTok{1.300}\NormalTok{,}\FloatTok{1.274}\NormalTok{,}\FloatTok{1.287}\NormalTok{)}
+\NormalTok{m1 }\OtherTok{\textless{}{-}} \FunctionTok{append}\NormalTok{(m1, }\FunctionTok{vector}\NormalTok{(}\StringTok{"list"}\NormalTok{,}\DecValTok{5}\NormalTok{)) }\CommentTok{\# append 5 element NULL contain in a list}
+\NormalTok{m2}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FloatTok{1.298}\NormalTok{,}\FloatTok{1.309}\NormalTok{,}\FloatTok{1.293}\NormalTok{,}\FloatTok{1.251}\NormalTok{,}\FloatTok{1.338}\NormalTok{,}\FloatTok{1.302}\NormalTok{,}\FloatTok{1.270}\NormalTok{,}\FloatTok{1.339}\NormalTok{,}\FloatTok{1.346}\NormalTok{,}\FloatTok{1.292}\NormalTok{,}\FloatTok{1.291}\NormalTok{,}\FloatTok{1.321}\NormalTok{,}\FloatTok{1.285}\NormalTok{)}
+\NormalTok{Si}\OtherTok{\textless{}{-}}\FunctionTok{tibble}\NormalTok{(}\AttributeTok{method1=}\NormalTok{m1,}\AttributeTok{method2=}\NormalTok{m2)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Use the functional programming}
+
+The functional programming is a paradigm of building computer program
+with a declarative type. In this case, the programs are constructed by
+applying and composing functions. In R the \texttt{tibble} library (and
+other \emph{tixxx}) allow this kind programming with the following
+construction \texttt{variable\ \%\textgreater{}\%\ function()}. The
+functional is a better way to write a comprehensive workflow:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# recover a list containing the values of method 1 padded with NULL values then converted to a vector, without NULL values}
+\NormalTok{m1}\OtherTok{\textless{}{-}}\NormalTok{Si}\SpecialCharTok{$}\NormalTok{method1 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unlist}\NormalTok{()}
+\NormalTok{m1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.311 1.287 1.293 1.308 1.291 1.300 1.274 1.287
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\hypertarget{manipulation}{%
+\subsubsection{Manipulation}\label{manipulation}}
+
+The libraries \texttt{tidyr} \& \texttt{dplyr} are useful to manipulate
+a data set.
+
+For example, in the first table, it is supposed that each samples have
+been measured with the both two methods:
+
+\begin{itemize}
+\tightlist
+\item
+  sample 1 : value m1 / value m2
+\item
+  sample 2 : value m1 / value m2
+\item
+  \ldots{}
+\end{itemize}
+
+In this case, measurements have been performed independently of the
+samples. So the first table does not work. Here it will be better that
+each value receive tag corresponding to its origin (method1 or method2).
+The code below propose this kind of table:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr, tidyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attachement du package : 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## Les objets suivants sont masqués depuis 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## Les objets suivants sont masqués depuis 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Si2}\OtherTok{\textless{}{-}}\FunctionTok{tibble}\NormalTok{(}\AttributeTok{method=}\FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"method1"}\NormalTok{,}\DecValTok{8}\NormalTok{),}\FunctionTok{rep}\NormalTok{(}\StringTok{"method2"}\NormalTok{,}\DecValTok{13}\NormalTok{)),}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(m1,m2))}
+
+\CommentTok{\# Let\textquotesingle{}s simulate a randomized acquisition of the dataset}
+\NormalTok{Si2}\OtherTok{\textless{}{-}}\NormalTok{Si2[}\FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(Si2)),] }\CommentTok{\# Indexes are generated by random pick, the tibble is shuffled}
+\FunctionTok{head}\NormalTok{(Si2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   method  values
+##   <chr>    <dbl>
+## 1 method1   1.29
+## 2 method2   1.34
+## 3 method1   1.27
+## 4 method2   1.27
+## 5 method2   1.32
+## 6 method1   1.29
+\end{verbatim}
+
+\textbf{Play with \texttt{tidyr} \& \texttt{dplyr} libraries and
+functional programming}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1b}\OtherTok{\textless{}{-}}\NormalTok{Si2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(method }\SpecialCharTok{==} \StringTok{"method1"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(values) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unlist}\NormalTok{()}
+\NormalTok{m1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.311 1.287 1.293 1.308 1.291 1.300 1.274 1.287
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## values1 values2 values3 values4 values5 values6 values7 values8 
+##   1.287   1.274   1.291   1.308   1.311   1.287   1.293   1.300
+\end{verbatim}
+
+Cheat-sheet for more information on those libraries:
+
+\url{https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf}
+
+\hypertarget{statistics-operations}{%
+\subsection{Statistics operations}\label{statistics-operations}}
+
+A rapid view of the global statistic descriptor with the function
+\texttt{summary}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##        Species  
+##  setosa    :50  
+##  versicolor:50  
+##  virginica :50  
+##                 
+##                 
+## 
+\end{verbatim}
+
+\emph{Note: iris is a dataset which is already include in R}
+
+\hypertarget{basic-operations}{%
+\subsubsection{\texorpdfstring{\emph{Basic
+operations:}}{Basic operations:}}\label{basic-operations}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length) }\CommentTok{\# Addition of all the observation in the variable}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 876.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length) }\CommentTok{\# Average}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.843333
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length) }\CommentTok{\# Standard deviation}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8280661
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{q }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length) }\CommentTok{\# Catch all the quantiles }
+\NormalTok{q}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   0%  25%  50%  75% 100% 
+##  4.3  5.1  5.8  6.4  7.9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{q[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  0% 
+## 4.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length) }\CommentTok{\# Number of observation in the variable}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 150
+\end{verbatim}
+
+\hypertarget{confidence-interval}{%
+\subsubsection{\texorpdfstring{\emph{Confidence
+interval}}{Confidence interval}}\label{confidence-interval}}
+
+The confidence interval at 95\% : \(IC=\bar{x}\pm1,96*se\) with:
+
+\begin{itemize}
+\tightlist
+\item
+  \(se\) the standard error ==\textgreater{} the standard deviation
+  \(\sigma\) of the mean
+\item
+  \(se=\frac{\sigma}{\sqrt{n-1}}\) with \(n\) the number of observations
+\item
+  The \(1.96\) correspond to a quantile \(\gamma\) of a normal student
+  law for a confidence \(\alpha\) of 95\% given by
+  \(\gamma=\frac{1-\alpha}{2} = \frac{1-0.95}{2}=0.025\)
+\item
+  R can calculate \(\gamma\) with: \texttt{qnorm(y)} \&
+  \texttt{qnorm(1-y)}\\
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\FloatTok{{-}0.95}\NormalTok{)}\SpecialCharTok{/}\DecValTok{2}
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.025
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{signif}\NormalTok{(}\FunctionTok{qnorm}\NormalTok{(y),}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1.96
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{signif}\NormalTok{(}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{y),}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.96
+\end{verbatim}
+
+\emph{The standard error is the standard deviation of the mean of
+distributions and the standard deviation is for the individual
+distribution of a normal law.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ iris}\SpecialCharTok{$}\NormalTok{Sepal.Length}
+\NormalTok{x\_N}\OtherTok{\textless{}{-}}\FunctionTok{length}\NormalTok{(x)}
+\NormalTok{x\_sd}\OtherTok{\textless{}{-}}\FunctionTok{sd}\NormalTok{(x)}
+\NormalTok{x\_mu}\OtherTok{\textless{}{-}}\FunctionTok{mean}\NormalTok{(x)}
+\NormalTok{x\_se}\OtherTok{\textless{}{-}}\NormalTok{x\_sd}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(x\_N)}
+\NormalTok{x\_ICmin}\OtherTok{\textless{}{-}}\NormalTok{x\_mu}\SpecialCharTok{+}\NormalTok{x\_se}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.025}\NormalTok{)}
+\NormalTok{x\_ICmax}\OtherTok{\textless{}{-}}\NormalTok{x\_mu}\SpecialCharTok{+}\NormalTok{x\_se}\SpecialCharTok{*}\FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.975}\NormalTok{)}
+\FunctionTok{paste}\NormalTok{(}\FunctionTok{signif}\NormalTok{(x\_ICmin,}\DecValTok{3}\NormalTok{),}\StringTok{"\textless{}"}\NormalTok{,}\FunctionTok{signif}\NormalTok{(x\_mu,}\DecValTok{3}\NormalTok{),}\StringTok{"\textless{}"}\NormalTok{,}\FunctionTok{signif}\NormalTok{(x\_ICmax,}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "5.71 < 5.84 < 5.98"
+\end{verbatim}
+
+The command \texttt{signif(variable,\ number)} print the
+\texttt{variable} with the \texttt{number} of significant value asked.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluation-of-probability-law}{%
+\section{Evaluation of probability
+law}\label{evaluation-of-probability-law}}
+
+With R, it is easy to evaluate a probability law:
+
+\begin{itemize}
+\tightlist
+\item
+  {\textbf{r}}mylaw ==\textgreater{} Simulate mylaw
+\item
+  {\textbf{d}}mylaw ==\textgreater{} Calculate the density of mylaw
+\item
+  {\textbf{p}}mylaw ==\textgreater{} Calculate the cumulative of density
+  function (CDF) of mylaw
+\item
+  {\textbf{q}}mylaw ==\textgreater{} Calculate the quantile of mylaw
+\end{itemize}
+
+Below the 3 mains laws:
+
+\hypertarget{normal-law-gauss-law}{%
+\subsection{\texorpdfstring{\emph{Normal Law (Gauss
+Law)}}{Normal Law (Gauss Law)}}\label{normal-law-gauss-law}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_mu}\OtherTok{\textless{}{-}}\DecValTok{20} \CommentTok{\# mean value of the normal law}
+\NormalTok{my\_sg}\OtherTok{\textless{}{-}}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{20}\NormalTok{) }\CommentTok{\# std dev of the normal law}
+\FunctionTok{dnorm}\NormalTok{(}\DecValTok{20}\NormalTok{,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg) }\CommentTok{\# point evaluation of the density at x=20 of a normal law centered at my\_mu and width sigma=my\_sg}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.08920621
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pnorm}\NormalTok{(}\DecValTok{20}\NormalTok{,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg) }\CommentTok{\# point evaluation of the CDF at q=20 of this same normal distribution}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.05}\NormalTok{,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg) }\CommentTok{\# quantile of this normal distribution considering a probability p=0.05}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12.64399
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg) }\CommentTok{\# generate 10 random numbers following this normal distribution}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 23.33057 22.26138 18.38888 23.40127 15.80321 12.41356 13.25710 21.93364
+##  [9] 21.01006 17.88063
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha}\OtherTok{=}\FloatTok{0.0001} \CommentTok{\# kind of "type I risk", the part of the plot I want to hide on the left/right sides.}
+\NormalTok{xmin}\OtherTok{=}\FunctionTok{qnorm}\NormalTok{(alpha,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg) }\CommentTok{\# left value of the range to plot the distribution}
+\NormalTok{xmax}\OtherTok{=}\FunctionTok{qnorm}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{alpha,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg) }\CommentTok{\# right value of the range to plot the distribution}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{binomial-law}{%
+\subsection{\texorpdfstring{\emph{Binomial
+law}}{Binomial law}}\label{binomial-law}}
+
+The Binary law can be positive or negative, but in the general cases, it
+is only the positive which is used. This is the law which is followed by
+a randomization selection when there are \textbf{ONLY TWO} possibility
+of results: A or B, alive or died. The probability to obtained each
+evenement must be constant (but not necessary equal). The probability to
+obtain the A event will be \(p\) and B will be \(q=(1-p)\). So, with
+\(n\) selection, the probability to obtain k event of A
+\(\mathbb{P}(X=k)\) will follow the binomial law \(B(n,p)\). The mean
+\(\mu\) correspond to the expectation \(\mathbb{E}\) (\emph{espérance in
+french}) and will be give by \(\mu=np\). the variance is given by
+\(var=npq\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OtherTok{\textless{}{-}}\DecValTok{30} \CommentTok{\# population}
+\NormalTok{p}\OtherTok{\textless{}{-}}\FloatTok{0.1} \CommentTok{\# probability of success}
+\FunctionTok{dbinom}\NormalTok{(}\AttributeTok{x=}\DecValTok{1}\NormalTok{,}\AttributeTok{size=}\NormalTok{n,}\AttributeTok{prob=}\NormalTok{p) }\CommentTok{\# Probability that I win exactly 1 time in 30 plays}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1413039
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pbinom}\NormalTok{(}\AttributeTok{q=}\DecValTok{2}\NormalTok{,}\AttributeTok{size=}\NormalTok{n,}\AttributeTok{prob=}\NormalTok{p) }\CommentTok{\# CDF, probability to win 0,1 or 2 times in 30 plays}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4113512
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qbinom}\NormalTok{(}\AttributeTok{p=}\FloatTok{0.5}\NormalTok{,}\AttributeTok{size=}\NormalTok{n,}\AttributeTok{prob=}\NormalTok{p) }\CommentTok{\# Quantile of 0.5 from the binomial law}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n=}\DecValTok{10}\NormalTok{,}\AttributeTok{size=}\NormalTok{n,}\AttributeTok{prob=}\NormalTok{p) }\CommentTok{\# Sample of size 10 from the binomial law}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 4 2 3 2 5 4 3 3 4
+\end{verbatim}
+
+The formula of the binomial law is:
+
+\[\mathbb{P}(X = k) = \binom{n}{k} p^k (1-p)^{n-k}\]
+
+Where \(\binom{n}{k}\) is the binomial coefficient (n choose k) and can
+be calculate with the command \texttt{choose(n,k)} or by
+\(\binom{n}{k} =C_n^{k}= \frac{n!}{k!(n-k)!}\)
+
+\hypertarget{poisson-law}{%
+\subsection{\texorpdfstring{\emph{Poisson
+law}}{Poisson law}}\label{poisson-law}}
+
+The Poisson law is used to described the probability of a rare event in
+an interval of time. It is an approximation of the binomial law when the
+when \(p\) tends to zero (very law probability) and \(n\) tends to
+\(\infty\) (a lot of repetition). This law take the parameter
+\(\lambda = np\) and traduce the the expectation \(\mathbb{E}\) and the
+variance (which is logical since
+\(p\rightarrow0\Rightarrow q\rightarrow1\) in the binomial law). That's
+why the Poisson law is define by \(P(\lambda)\) and represent the mean
+of the probability where the rare event \(k\) is realized.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OtherTok{\textless{}{-}}\DecValTok{30} \CommentTok{\# number of observation}
+\NormalTok{m }\OtherTok{\textless{}{-}} \DecValTok{20} \CommentTok{\#  Poisson law parameter}
+\FunctionTok{dpois}\NormalTok{(}\AttributeTok{x=}\DecValTok{1}\NormalTok{, }\AttributeTok{lambda =}\NormalTok{m ) }\CommentTok{\#}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.122307e-08
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ppois}\NormalTok{(}\AttributeTok{q=}\DecValTok{2}\NormalTok{, }\AttributeTok{lambda =}\NormalTok{m ) }\CommentTok{\# }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.55515e-07
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qpois}\NormalTok{(}\AttributeTok{p=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{lambda =}\NormalTok{m ) }\CommentTok{\# }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rpois}\NormalTok{(}\AttributeTok{n=}\NormalTok{n, }\AttributeTok{lambda =}\NormalTok{m ) }\CommentTok{\# }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 19 17 19 21 22 17 23 20 25 12 17 16 22 25 16 21 19 22 26 18 27 20 21 12 21
+## [26] 25 24 20 20 11
+\end{verbatim}
+
+The formaula of the Poisson law is:
+\[\mathbb{P}(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}\]
+
+\emph{Note: factorial calculation in R:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{factorial}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 120
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{graphics}{%
+\section{Graphics}\label{graphics}}
+
+Some graphics can be use in R without package. But they are limited and
+don't have a lot possibility to manage them. Those graphs can be useful
+for a first and fast exploration of the data but for a presentation, it
+must be interested to create more complex/beautful graphs. That why it
+is better to work with the package \texttt{ggplot2}.
+
+First of all, install the package \texttt{ggplot2} then upload it in R
+thanks to \texttt{library} command:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{ggplot2} is defined at least by a \textbf{data set}, some
+\textbf{aes,} which represent the ``aesthetic'' of the graphic, and the
+type of the graphic thanks to the function \textbf{geom.}. The
+\textbf{aes} is defined at least by a \textbf{x} and a \textbf{y}
+values. It's possible to add also the \textbf{color}, the \textbf{fill},
+the \textbf{group}. Some example will be showed below.
+
+All the addition of function is add thanks the \textbf{+}
+
+For more information: \url{https://bookdown.org/ael/rexplor/chap8.html}
+(in French)
+
+Graphic can caught in a variable but it is recommended to have one and
+unique block per graphic:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# A beautiful plot of this normal law CDF}
+\FunctionTok{ggplot}\NormalTok{()}\SpecialCharTok{+} \CommentTok{\# start plot}
+  \FunctionTok{xlim}\NormalTok{(xmin,xmax)}\SpecialCharTok{+} \CommentTok{\# define the range to plot}
+  \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun=}\NormalTok{pnorm,}\AttributeTok{args=}\FunctionTok{c}\NormalTok{(}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg))}\SpecialCharTok{+} \CommentTok{\# define the normal law density}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"x"}\NormalTok{)}\SpecialCharTok{+} \CommentTok{\# decoration of the x axis}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"P(X\textless{}=x)"}\NormalTok{)}\SpecialCharTok{+} \CommentTok{\# decoration of the y axis}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Normal law CDF {-} mean="}\NormalTok{,my\_mu,}\StringTok{", std dev="}\NormalTok{,}\FunctionTok{signif}\NormalTok{(my\_sg,}\DecValTok{3}\NormalTok{)))}\SpecialCharTok{+} \CommentTok{\# title of the plot}
+  \FunctionTok{theme\_bw}\NormalTok{(}\AttributeTok{base\_size=}\DecValTok{12}\NormalTok{)}\SpecialCharTok{+} \CommentTok{\# ...the final touch}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+Here \texttt{stat\_function(fun=pnorm,args=c(mean=my\_mu,sd=my\_sg)} is
+used to draw a function (\emph{the CDF of a normal law in this case}).
+
+\hypertarget{the-point_plot}{%
+\subsection{The point\_plot:}\label{the-point_plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(Ca,  }
+  \AttributeTok{type =} \StringTok{"p"}\NormalTok{, }\CommentTok{\# type de tracé: points ("p"), lignes ("l"), les deux ("b" ou "o"),}
+  \AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\CommentTok{\# couleur, tapez \textasciigrave{}colours()\textasciigrave{} pour la liste complète}
+  \AttributeTok{pch =} \DecValTok{4}\NormalTok{, }\CommentTok{\# type de symboles, un chiffre entre 0 et 25, tapez \textasciigrave{}?points\textasciigrave{}}
+  \AttributeTok{cex =} \FloatTok{0.5}\NormalTok{, }\CommentTok{\# taille des symboles}
+  \AttributeTok{lty =} \DecValTok{3}\NormalTok{, }\CommentTok{\# type de lignes, un chiffre entre 1 et 6}
+  \AttributeTok{lwd =} \FloatTok{1.2}\NormalTok{, }\CommentTok{\# taille de lignes}
+  \AttributeTok{ylab =} \StringTok{"Ca content"}\NormalTok{, }\CommentTok{\# titre pour l\textquotesingle{}axe des y}
+  \AttributeTok{main=}\StringTok{"Exercie 3 of the Statistic lecture"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\FunctionTok{mean}\NormalTok{(Ca)}\SpecialCharTok{+}\DecValTok{3}\SpecialCharTok{*}\FunctionTok{sd}\NormalTok{(Ca), }\AttributeTok{col=}\StringTok{"red"}\NormalTok{) }\CommentTok{\# Add a line on the graphic}
+\FunctionTok{text}\NormalTok{(}\DecValTok{15}\NormalTok{,}\DecValTok{200}\NormalTok{, }\StringTok{"3 * Standard Deviation"}\NormalTok{, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{) }\CommentTok{\# Add a text on the graphic}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\texttt{abline} \& \texttt{text} functions can add a line and a text
+respectively in the graphic.
+
+With \texttt{ggplot2} use \texttt{geom.point()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example of data frame}
+\NormalTok{df\_binom}\OtherTok{\textless{}{-}}\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\NormalTok{n),}\AttributeTok{p=}\FunctionTok{dbinom}\NormalTok{(}\AttributeTok{x=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\NormalTok{n),}\AttributeTok{size=}\NormalTok{n,}\AttributeTok{prob=}\NormalTok{p))}
+\CommentTok{\# Genaration of a graph}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{df\_binom)}\SpecialCharTok{+}
+  \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{x,}\AttributeTok{y=}\NormalTok{p)}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{x,}\AttributeTok{y=}\DecValTok{0}\NormalTok{,}\AttributeTok{xend=}\NormalTok{x,}\AttributeTok{yend=}\NormalTok{p))}\SpecialCharTok{+}
+  \FunctionTok{theme\_light}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Number of success, x"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Probability, p"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Density of the binomial law, size="}\NormalTok{,n,}\StringTok{", prob="}\NormalTok{,p))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-30-1.pdf}
+
+\hypertarget{the-barplot}{%
+\subsection{The Barplot}\label{the-barplot}}
+
+Basic R code for to generate a barplot of a Poison law:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{barplot}\NormalTok{(}\FunctionTok{rpois}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{lambda =}\NormalTok{ m))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+With \texttt{ggplot2} use \texttt{geom.histogram()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Species, }\AttributeTok{y =}\NormalTok{ Sepal.Length))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_test}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+It is possible to have multigroup in the barplot. It's just needed to
+add the parameter \texttt{fill\ =\ group2} in the \texttt{aes()}. By
+default the group are stacked. To have the barplot side by side, add
+\texttt{position=position\_dodge()} in the \texttt{geom\_bar} parameter.
+
+More complicate, the case of 2 continue variables y. It is not possible
+at this step with \texttt{geom\_bar} function, which allow only one x
+for one y. To solve this issue, it's needed to reorganized the data to
+transform a table with y columns to a table with only two columns. This
+transformation can be done with the function
+\texttt{gather(data,\ key,\ value,\ columns\_to\_gather)} of the library
+\texttt{tidyr}.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{data} ==\textgreater{} data frame, example iris
+\item
+  \textbf{key} ==\textgreater{} name of the group
+\item
+  \textbf{value} ==\textgreater{} name of the y axis
+\item
+  \textbf{columns\_to\_gather} ==\textgreater{} y variables of the
+  original data frame that it needed to be merged, separate by
+  \texttt{,}\\
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyr)}
+\NormalTok{reformat }\OtherTok{\textless{}{-}} \FunctionTok{gather}\NormalTok{(iris, }\AttributeTok{key =} \StringTok{"Part\_flower"}\NormalTok{, }\AttributeTok{value =} \StringTok{"Length"}\NormalTok{, Sepal.Length, Petal.Length)}
+\FunctionTok{head}\NormalTok{(reformat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Sepal.Width Petal.Width Species  Part_flower Length
+## 1         3.5         0.2  setosa Sepal.Length    5.1
+## 2         3.0         0.2  setosa Sepal.Length    4.9
+## 3         3.2         0.2  setosa Sepal.Length    4.7
+## 4         3.1         0.2  setosa Sepal.Length    4.6
+## 5         3.6         0.2  setosa Sepal.Length    5.0
+## 6         3.9         0.4  setosa Sepal.Length    5.4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(reformat, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Species, }\AttributeTok{y =}\NormalTok{ Length, }\AttributeTok{fill=}\NormalTok{Part\_flower))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position=}\FunctionTok{position\_dodge}\NormalTok{())}\SpecialCharTok{+}
+  \FunctionTok{theme\_test}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-33-1.pdf}
+
+More inspiring barplot :
+\url{https://www.datanovia.com/en/fr/lessons/ggplot-barplot/}
+
+\emph{Remark: it is not the best graph to describe the iris database}
+
+\hypertarget{the-histogram}{%
+\subsection{The Histogram}\label{the-histogram}}
+
+Basic R code for to generate an histogram of a nominal law:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg), }\AttributeTok{freq=}\NormalTok{F) }
+\FunctionTok{curve}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(x,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg),}\AttributeTok{from =}\NormalTok{ xmin,}\AttributeTok{to =}\NormalTok{ xmax,}\AttributeTok{ylab=}\StringTok{"densité"}\NormalTok{,}\AttributeTok{add=}\NormalTok{T,}\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+With \texttt{ggplot2} use \texttt{geom.histogram()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{,}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg))}
+\FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{(x))}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{ (}\AttributeTok{y=}\FunctionTok{after\_stat}\NormalTok{(density)), }\CommentTok{\#after\_stat(density) normalize to 1}
+                 \AttributeTok{fill =} \StringTok{"grey"}\NormalTok{,}
+                 \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+                 \AttributeTok{bins =} \DecValTok{50}\NormalTok{)}\SpecialCharTok{+} \CommentTok{\# bins number of interval un the histogram}
+  \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun=}\NormalTok{dnorm,}\AttributeTok{args=}\FunctionTok{c}\NormalTok{(}\AttributeTok{mean=}\NormalTok{my\_mu,}\AttributeTok{sd=}\NormalTok{my\_sg),}
+                \AttributeTok{color =}\StringTok{"red"}\NormalTok{, }
+                \AttributeTok{size =} \FloatTok{0.1}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{xlim}\NormalTok{(xmin,xmax)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## i Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (`geom_bar()`).
+\end{verbatim}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-35-1.pdf}
+
+\hypertarget{the-box-plot}{%
+\subsection{The box-plot}\label{the-box-plot}}
+
+The boxplot can represent the distribution of the observation in
+function of the group. It gives also the quantile, the mean and the
+median information.
+
+The easyiest way to have a boxplot is to use the basic R command:
+\texttt{boxplot(quantitative\_variable\textasciitilde{}quatative\_variable,\ labels)}.
+Between the quantitative\_variable \& the quantative\_variable there is
+a (\textbf{\textasciitilde{}}).\\
+Example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length}\SpecialCharTok{\textasciitilde{}}\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Species,}\AttributeTok{ylab=}\StringTok{"Sepal Length"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"Species"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+With \texttt{ggplot2} use \texttt{geom.boxplot()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{y=}\NormalTok{Sepal.Length, }\AttributeTok{fill=}\NormalTok{Species))}\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{8}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{)}\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.7}\NormalTok{, }\CommentTok{\#alpha for the transparence,}
+               \AttributeTok{outlier.colour=}\StringTok{"red"}\NormalTok{,}
+               \AttributeTok{outlier.shape=}\DecValTok{8}\NormalTok{,}\AttributeTok{outlier.size=}\DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{stat\_summary}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ mean, }\AttributeTok{geom=}\StringTok{"point"}\NormalTok{, }\AttributeTok{shape=}\DecValTok{20}\NormalTok{, }\AttributeTok{size=}\DecValTok{8}\NormalTok{, }\AttributeTok{color=}\StringTok{"Yellow"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{position=}\StringTok{"jitter"}\NormalTok{, }\AttributeTok{color=}\StringTok{"blue"}\NormalTok{, }\AttributeTok{alpha=}\NormalTok{.}\DecValTok{5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"Set2"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-37-1.pdf}
+
+The function \texttt{stat\_summary(fun.y\ =\ mean)} display the mean
+value.\\
+
+\hypertarget{multiple-grahs}{%
+\subsection{Multiple grahs}\label{multiple-grahs}}
+
+As it is showed, it is possible to combine several graphic in one by
+addition of \texttt{goem} functions. But sometimes, it is needed to
+separate the graphics. It is called the faceting. Two function can be
+used:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{facet\_warp(qualitative\_variable,\ nrow\ =\ number\ of\ ligne)}
+\item
+  \texttt{facet\_grid(ligne\ \textasciitilde{}column)}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width, }\AttributeTok{y=}\NormalTok{Sepal.Length, }\AttributeTok{shape =}\NormalTok{ Species, }\AttributeTok{color=}\NormalTok{Species))}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{formula=}\NormalTok{ y}\SpecialCharTok{\textasciitilde{}}\FunctionTok{poly}\NormalTok{(x,}\DecValTok{3}\NormalTok{), }\AttributeTok{se=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Species, }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-38-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width, }\AttributeTok{y=}\NormalTok{Sepal.Length, }\AttributeTok{shape =}\NormalTok{ Species, }\AttributeTok{color =}\NormalTok{ Species))}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Species)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{R_Stats_Tuto_files/figure-latex/unnamed-chunk-39-1.pdf}
+
+In the first facing graph, the function
+\texttt{geom\_smooth(method="lm",\ formula=\ y\textbackslash{}\textasciitilde{}poly(x,3),\ se=TRUE,\ size\ =\ 0.5)}
+has been introduced. This function is used to add a smooth regression
+curve to show the general trend of the dataset. Here the method used to
+draw this curve is a fitting linear model \textbf{lm.}
+
+For more inspired graphs:\\
+\url{https://rstudio-pubs-static.s3.amazonaws.com/578122_5e69256788bb4dcca6157d2bcfa7694e.html}\strut \\
+\url{https://www.charlesbordet.com/fr/faire-beaux-graphiques-ggplot2/\#it\%C3\%A9ration-4---ajouter-des-couleurs-pour-chaque-groupe}\strut \\
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{statistics-test}{%
+\section{Statistics Test}\label{statistics-test}}
+
+\hypertarget{test-de-student}{%
+\subsection{\texorpdfstring{Test de
+\textbf{Student}}{Test de Student}}\label{test-de-student}}
+
+\hypertarget{test-de-fisher}{%
+\subsection{\texorpdfstring{Test de
+\textbf{Fisher}}{Test de Fisher}}\label{test-de-fisher}}
+
+voir la library \texttt{moment} kurtosis skweness
+
+\end{document}
