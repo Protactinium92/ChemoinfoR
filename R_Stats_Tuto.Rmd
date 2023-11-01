@@ -3,9 +3,10 @@ title: "R Stats Tuto"
 author: "Pierre-Alexandre"
 date: "2023-10-11"
 output:
-  word_document: default
   html_document:
+    pandoc_args: ["--extract-media", "."]
     df_print: paged
+  word_document: default
   pdf_document: default
 ---
 
@@ -291,14 +292,19 @@ The command `signif(variable, number)` print the `variable` with the `number` of
 
 With R, it is easy to evaluate a probability law:
 
--   [**r**]{style="color:blue;"}mylaw ==\> Simulate mylaw
--   [**d**]{style="color:blue;"}mylaw ==\> Calculate the density of mylaw
+-   [**r**]{style="color:blue;"}mylaw ==\> Simulate mylaw with randomized variables
+-   [**d**]{style="color:blue;"}mylaw ==\> Calculate the density (or distribution) (PDF) of mylaw
 -   [**p**]{style="color:blue;"}mylaw ==\> Calculate the cumulative of density function (CDF) of mylaw
 -   [**q**]{style="color:blue;"}mylaw ==\> Calculate the quantile of mylaw
 
 Below the 3 mains laws:
 
 ## *Normal Law (Gauss Law)*
+
+The Normal law is used to described continuous variables (time, temperature...) where is impossible to predict the value `k` of a variable `X` with exactitude. The reason why is the fact that the possibility to give precisely the right value is closed to 0 because the infinity of possibility. For example, it is impossible to predict that temperature in the room 401N will be exactly 20°C because there an infinity of possibility between 19.9°C and 20.1°C. However the the comportment of the variable `X` can be described thanks to the **probability density function (PDF)**. With this description, it is possible to deduce the probability in a given interval which is represented by the area under the **PDF** curve between this interval. This probability where `X` is include in `[a,b]` interval, $\mathbb{P}(X\in[a,b])$, is given by the **cumulative density function (CDF)** which is the primitive of the **PDF**:
+
+-   **PDF**: $f(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}$
+-   **CDF**: $\mathbb{P}(X\in[a,b])]=\int_{a}^{b}f(x)dx$
 
 ```{r}
 my_mu<-20 # mean value of the normal law
@@ -307,14 +313,22 @@ dnorm(20,mean=my_mu,sd=my_sg) # point evaluation of the density at x=20 of a nor
 pnorm(20,mean=my_mu,sd=my_sg) # point evaluation of the CDF at q=20 of this same normal distribution
 qnorm(0.05,mean=my_mu,sd=my_sg) # quantile of this normal distribution considering a probability p=0.05
 rnorm(10,mean=my_mu,sd=my_sg) # generate 10 random numbers following this normal distribution
-alpha=0.0001 # kind of "type I risk", the part of the plot I want to hide on the left/right sides.
-xmin=qnorm(alpha,mean=my_mu,sd=my_sg) # left value of the range to plot the distribution
-xmax=qnorm(1-alpha,mean=my_mu,sd=my_sg) # right value of the range to plot the distribution
 ```
+
+<center>
+![Graph PDF and CDF](https://cdn.analyticsvidhya.com/wp-content/uploads/2023/07/CDF-vs-PDF.png)
+</center>
+
+The **Cumulative Density Function** has remarkable properties:
+
+-   Always positive
+-   Always increasing
+-   y = 0 to 1
+
 
 ## *Binomial law*
 
-The Binary law can be positive or negative, but in the general cases, it is only the positive which is used. This is the law which is followed by a randomization selection when there are **ONLY TWO** possibility of results: A or B, alive or died. The probability to obtained each evenement must be constant (but not necessary equal). The probability to obtain the A event will be $p$ and B will be $q=(1-p)$. So, with $n$ selection, the probability to obtain k event of A $\mathbb{P}(X=k)$ will follow the binomial law $B(n,p)$. The mean $\mu$ correspond to the expectation $\mathbb{E}$ (*espérance in french*) and will be give by $\mu=np$. the variance is given by $var=npq$.
+The Binary law can be positive or negative, but in the general cases, it is only the positive which is used. This is the law which is followed by a randomization selection when there are **ONLY TWO** possibility of results: A or B, alive or died. The probability to obtained each event must be constant (but not necessary equal). The probability to obtain the A event will be $p$ and B will be $q=(1-p)$. So, with $n$ selection, the probability to obtain k event of A $\mathbb{P}(X=k)$ will follow the binomial law $B(n,p)$. The mean $\mu$ correspond to the expectation $\mathbb{E}$ (*espérance in french*) and will be give by $\mu=np$. the variance is given by $var=npq$.
 
 ```{r}
 n<-30 # population
@@ -373,6 +387,11 @@ For more information: <https://bookdown.org/ael/rexplor/chap8.html> (in French)
 Graphic can caught in a variable but it is recommended to have one and unique block per graphic:
 
 ```{r}
+# Determination of the limits
+alpha=0.0001 # kind of "type I risk", the part of the plot I want to hide on the left/right sides.
+xmin=qnorm(alpha,mean=my_mu,sd=my_sg) # left value of the range to plot the distribution
+xmax=qnorm(1-alpha,mean=my_mu,sd=my_sg) # right value of the range to plot the distribution
+
 # A beautiful plot of this normal law CDF
 ggplot()+ # start plot
   xlim(xmin,xmax)+ # define the range to plot
@@ -441,7 +460,6 @@ With `ggplot2` use `geom.histogram()`:
 ggplot(iris, aes(x = Species, y = Sepal.Length))+
   geom_bar(stat = "identity")+
   theme_test()
-
 ```
 
 It is possible to have multigroup in the barplot. It's just needed to add the parameter `fill = group2` in the `aes()`. By default the group are stacked. To have the barplot side by side, add `position=position_dodge()` in the `geom_bar` parameter.
