@@ -292,10 +292,12 @@ The command `signif(variable, number)` print the `variable` with the `number` of
 
 With R, it is easy to evaluate a probability law:
 
--   [**r**]{style="color:blue;"}mylaw ==\> Simulate mylaw with randomized variables
--   [**d**]{style="color:blue;"}mylaw ==\> Calculate the density (or distribution) (PDF) of mylaw
--   [**p**]{style="color:blue;"}mylaw ==\> Calculate the cumulative of density function (CDF) of mylaw
--   [**q**]{style="color:blue;"}mylaw ==\> Calculate the quantile of mylaw
+-   [**r**]{style="color:blue;"}mylaw(n, parameters) ==\> Simulate *mylaw* with randomized variables
+-   [**d**]{style="color:blue;"}mylaw(x, parameters) ==\> Calculate the density (or distribution) (PDF) of *mylaw*
+-   [**p**]{style="color:blue;"}mylaw(q, parameters) ==\> Calculate the cumulative of density function (CDF) of *mylaw*
+-   [**q**]{style="color:blue;"}mylaw(p, parameters) ==\> Calculate the quantile of mylaw
+
+With **x** & **q** vector of values to be evaluate by *mylaw*. Can be just one value for one evaluation, several values or an interval to draw a graph for exemple. **p** is the probabilitie of *mylaw*. And **n** the number of observations to be generate.
 
 Below the 3 mains laws:
 
@@ -305,6 +307,8 @@ The Normal law is used to described continuous variables (time, temperature...) 
 
 -   **PDF**: $f(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}$
 -   **CDF**: $\mathbb{P}(X\in[a,b])]=\int_{a}^{b}f(x)dx$
+
+Where $µ$ is the mean and $\sigma$ is the standard deviation which describe the normal law. 
 
 ```{r}
 my_mu<-20 # mean value of the normal law
@@ -316,7 +320,7 @@ rnorm(10,mean=my_mu,sd=my_sg) # generate 10 random numbers following this normal
 ```
 
 <center>
-![Graph PDF and CDF](https://cdn.analyticsvidhya.com/wp-content/uploads/2023/07/CDF-vs-PDF.png)
+![Graph of the PDF (right) and the CDF (left)](https://cdn.analyticsvidhya.com/wp-content/uploads/2023/07/CDF-vs-PDF.png)
 </center>
 
 The **Cumulative Density Function** has remarkable properties:
@@ -395,7 +399,8 @@ xmax=qnorm(1-alpha,mean=my_mu,sd=my_sg) # right value of the range to plot the d
 # A beautiful plot of this normal law CDF
 ggplot()+ # start plot
   xlim(xmin,xmax)+ # define the range to plot
-  stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg))+ # define the normal law density
+  stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg))+ #Define the CDF of a normal law
+  stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg),geom="area",xlim=c(xmin,20))+ # define the normal law CDF, plot as an area under the curve and plot until the value 15
   xlab("x")+ # decoration of the x axis
   ylab("P(X<=x)")+ # decoration of the y axis
   labs(title=paste("Normal law CDF - mean=",my_mu,", std dev=",signif(my_sg,3)))+ # title of the plot
@@ -403,7 +408,7 @@ ggplot()+ # start plot
   theme(plot.title = element_text(hjust = 0.5, color = "blue"))
 ```
 
-Here `stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg)` is used to draw a function (*the CDF of a normal law in this case*).
+Here `stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg)` is used to draw a function (*the CDF of a normal law in this case*). Then a second curve is added with the parameter `geom` to display the area under the curve.
 
 ## The point_plot:
 
@@ -432,7 +437,7 @@ text(15,200, "3 * Standard Deviation", col="red") # Add a text on the graphic
 With `ggplot2` use `geom.point()`:
 
 ```{r}
-# Example of data frame
+# Example of data frame for a binomial law
 df_binom<-data.frame(x=c(0:n),p=dbinom(x=c(0:n),size=n,prob=p))
 # Genaration of a graph
 ggplot(data=df_binom)+
@@ -450,7 +455,16 @@ ggplot(data=df_binom)+
 Basic R code for to generate a barplot of a Poison law:
 
 ```{r}
-barplot(rpois(100, lambda = m))
+# Poisson distribution parameter
+lambda <- 3  # Lambda parameter
+
+# Generate values from the Poisson distribution
+x <- c(0:10)  # Possible values (adjust as needed)
+probas <- dpois(x, lambda = lambda)  # PDF
+ 
+# Create the barplot
+barplot(probas, names.arg = x, col = "skyblue", main = "Poisson Distribution",
+        xlab = "Number of events", ylab = "Probability", ylim = c(0, max(probas) + 0.1))
 
 ```
 
