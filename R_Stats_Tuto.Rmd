@@ -18,9 +18,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## *R Markdown*
 
-*This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the YouTube tutorial (in french) <https://www.youtube.com/watch?v=lFdB4fIAcLM>*
+*This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the [YouTube tutorial](<https://www.youtube.com/watch?v=lFdB4fIAcLM>) (in french).*
 
-*A cheat-sheet can be find here: <https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>*
+*A cheat-sheet can be found [here](<https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>)*
 
 ## *Preparation of the work space*
 
@@ -31,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE)
 1.  *Download then Install R*
 2.  *Download then Install RStudio*
 
-*Cheat-sheet of RStudio : <https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1tpycou*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>*
+*Cheat-sheet of RStudio can be found [here](<https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1tpycou*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>).*
 
 ### *Install package:*
 
@@ -305,7 +305,7 @@ Below the 3 mains laws:
 
 The Normal law is used to described continuous variables (time, temperature...) where is impossible to predict the value `k` of a variable `X` with exactitude. The reason why is the fact that the possibility to give precisely the right value is closed to 0 because the infinity of possibility. For example, it is impossible to predict that temperature in the room 401N will be exactly 20°C because there an infinity of possibility between 19.9°C and 20.1°C. However the the comportment of the variable `X` can be described thanks to the **probability density function (PDF)**. With this description, it is possible to deduce the probability in a given interval which is represented by the area under the **PDF** curve between this interval. This probability where `X` is include in `[a,b]` interval, $\mathbb{P}(X\in[a,b])$, is given by the **cumulative density function (CDF)** which is the primitive of the **PDF**:
 
--   **PDF**: $f(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}$
+-   **PDF**: $f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}$
 -   **CDF**: $\mathbb{P}(X\in[a,b])]=\int_{a}^{b}f(x)dx$
 
 Where $µ$ is the mean and $\sigma$ is the standard deviation which describe the normal law. 
