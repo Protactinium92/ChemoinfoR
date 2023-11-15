@@ -16,34 +16,36 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ------------------------------------------------------------------------
 
-## *R Markdown*
+# 
 
-*This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the [YouTube tutorial](<https://www.youtube.com/watch?v=lFdB4fIAcLM>) (in french).*
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the [YouTube tutorial](<https://www.youtube.com/watch?v=lFdB4fIAcLM>) (in french).
 
 *A cheat-sheet can be found [here](<https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>)*
 
-## *Preparation of the work space*
+## Preparation of the work space
 
-### *R & RStudio install*
+### R & RStudio install
 
-*R & the IDE RStudio can be install from this web page : <https://posit.co/download/rstudio-desktop/>*
+R & the IDE RStudio can be install from this web page : <https://posit.co/download/rstudio-desktop/>
 
-1.  *Download then Install R*
-2.  *Download then Install RStudio*
+1.  Download then Install R
+2.  Download then Install RStudio
 
-*Cheat-sheet of RStudio can be found [here](<https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1tpycou*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>).*
+Cheat-sheet of RStudio can be found [here](<https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1tpycou*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>).
 
-### *Install package:*
+### Install package:
 
-*Packages can be install with the instruction `install.packages()` (Don't forget the`" "`):\
-Example for the `ggplot2` package:*
+Packages can be install with the instruction `install.packages()` (Don't forget the`" "`):
+Example for the `ggplot2` package:
 
 ```{r eval=FALSE}
 # Install from CRAN
 install.packages("ggplot2")
 ```
 
-*To see all the packages which are installed use the code below:*
+To see all the packages which are installed use the code below:
 
 ```{r eval=FALSE}
 # Installed packages
@@ -131,6 +133,8 @@ rm(list = ls())
 ```
 
 ## Dataset Manipulation
+
+To import Excel File, the library `readxl`is needed to be install.
 
 ### Importation of csv file
 
@@ -384,6 +388,7 @@ library(ggplot2)
 
 `ggplot2` is defined at least by a **data set**, some **aes,** which represent the "aesthetic" of the graphic, and the type of the graphic thanks to the function **geom.**. The **aes** is defined at least by a **x** and a **y** values. It's possible to add also the **color**, the **fill**, the **group**. Some example will be showed below.
 
+[**WARNING**]{style="color:red;"}:\
 All the addition of function is add thanks the **+**
 
 For more information: <https://bookdown.org/ael/rexplor/chap8.html> (in French)
