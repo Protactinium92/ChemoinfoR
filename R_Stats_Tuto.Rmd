@@ -134,7 +134,7 @@ rm(list = ls())
 
 ## Dataset Manipulation
 
-To import Excel File, the library `readxl`is needed to be install.
+To import Excel File, the library `readxl` is needed to be install.
 
 ### Importation of csv file
 
