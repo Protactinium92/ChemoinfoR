@@ -5,6 +5,8 @@ date: "2023-10-11"
 output:
   html_document:
     pandoc_args: ["--extract-media", "."]
+    toc: true #table of content
+    toc_depth: 3 #upto 3 heading
     df_print: paged
   word_document: default
   pdf_document: default
@@ -20,9 +22,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the [YouTube tutorial](<https://www.youtube.com/watch?v=lFdB4fIAcLM>) (in french).
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com> or the [YouTube tutorial](https://www.youtube.com/watch?v=lFdB4fIAcLM) (in french).
 
-*A cheat-sheet can be found [here](<https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>)*
+*A cheat-sheet can be found [here](https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*a65iq2*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..)*
 
 ## Preparation of the work space
 
@@ -33,12 +35,11 @@ R & the IDE RStudio can be install from this web page : <https://posit.co/downlo
 1.  Download then Install R
 2.  Download then Install RStudio
 
-Cheat-sheet of RStudio can be found [here](<https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1tpycou*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..>).
+Cheat-sheet of RStudio can be found [here](https://rstudio.github.io/cheatsheets/html/rstudio-ide.html?_gl=1*1tpycou*_ga*MTk3MDA5NzQ0MS4xNjk3MDYyMzE3*_ga_2C0WZ1JHG0*MTY5NzA2MjMxNi4xLjEuMTY5NzA2MzAzNy4wLjAuMA..).
 
 ### Install package:
 
-Packages can be install with the instruction `install.packages()` (Don't forget the`" "`):
-Example for the `ggplot2` package:
+Packages can be install with the instruction `install.packages()` (Don't forget the`" "`): Example for the `ggplot2` package:
 
 ```{r eval=FALSE}
 # Install from CRAN
@@ -312,7 +313,7 @@ The Normal law is used to described continuous variables (time, temperature...) 
 -   **PDF**: $f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}$
 -   **CDF**: $\mathbb{P}(X\in[a,b])]=\int_{a}^{b}f(x)dx$
 
-Where $µ$ is the mean and $\sigma$ is the standard deviation which describe the normal law. 
+Where $µ$ is the mean and $\sigma$ is the standard deviation which describe the normal law.
 
 ```{r}
 my_mu<-20 # mean value of the normal law
@@ -324,7 +325,9 @@ rnorm(10,mean=my_mu,sd=my_sg) # generate 10 random numbers following this normal
 ```
 
 <center>
+
 ![Graph of the PDF (right) and the CDF (left)](https://cdn.analyticsvidhya.com/wp-content/uploads/2023/07/CDF-vs-PDF.png)
+
 </center>
 
 The **Cumulative Density Function** has remarkable properties:
@@ -332,7 +335,6 @@ The **Cumulative Density Function** has remarkable properties:
 -   Always positive
 -   Always increasing
 -   y = 0 to 1
-
 
 ## *Binomial law*
 
@@ -366,7 +368,7 @@ qpois(p=0.5, lambda =m ) #
 rpois(n=n, lambda =m ) # 
 ```
 
-The formaula of the Poisson law is: $$\mathbb{P}(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}$$
+The formula of the Poisson law is: $$\mathbb{P}(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}$$
 
 *Note: factorial calculation in R:*
 
@@ -389,7 +391,7 @@ library(ggplot2)
 `ggplot2` is defined at least by a **data set**, some **aes,** which represent the "aesthetic" of the graphic, and the type of the graphic thanks to the function **geom.**. The **aes** is defined at least by a **x** and a **y** values. It's possible to add also the **color**, the **fill**, the **group**. Some example will be showed below.
 
 [**WARNING**]{style="color:red;"}:\
-All the addition of function is add thanks the **+**
+All the addition of function is add thanks the ***+***
 
 For more information: <https://bookdown.org/ael/rexplor/chap8.html> (in French)
 
@@ -473,7 +475,7 @@ barplot(probas, names.arg = x, col = "skyblue", main = "Poisson Distribution",
 
 ```
 
-With `ggplot2` use `geom.histogram()`:
+With `ggplot2` use `geom.bar()`:
 
 ```{r}
 ggplot(iris, aes(x = Species, y = Sepal.Length))+
@@ -516,16 +518,19 @@ curve(dnorm(x,mean=my_mu,sd=my_sg),from = xmin,to = xmax,ylab="densité",add=T,c
 With `ggplot2` use `geom.histogram()`:
 
 ```{r}
-data <- data.frame(x = rnorm(100,mean=my_mu,sd=my_sg))
-ggplot(data, aes(x))+
-  geom_histogram(aes (y=after_stat(density)), #after_stat(density) normalize to 1
-                 fill = "grey",
-                 color = "black",
-                 bins = 50)+ # bins number of interval un the histogram
-  stat_function(fun=dnorm,args=c(mean=my_mu,sd=my_sg),
+#data <- data.frame(x = rnorm(100,mean=my_mu,sd=my_sg))
+ggplot(iris, aes(x= Sepal.Length))+
+  geom_histogram(aes (y=after_stat(density),color=Species, fill = Species), #after_stat(density) normalize to 1
+                 bins = 50,
+                 position = "identity",
+                 alpha = 0.4,
+                 )+ # bins number of interval un the histogram
+  geom_density(aes(color = Species), size = 1)+ #show the density of each disribution
+  stat_function(fun=dnorm,args=c(mean=mean(iris$Sepal.Length),sd=sd(iris$Sepal.Length)), #show the normal law theortic for the global distribution
                 color ="red", 
-                size = 0.1)+
-  xlim(xmin,xmax)+
+                linewidth = 0.1)+
+  scale_color_manual(values = c("#00AFBB", "#E7B800","pink"))+ #use personalized color
+  scale_fill_manual(values = c("#00AFBB", "#E7B800","pink"))+ #use personalized color
   theme_bw()
 
 ```
@@ -591,7 +596,117 @@ For more inspired graphs:\
 
 # Statistics Test
 
-## Test de **Student**
+## Normality test
+
+### Q-Q Plot
+
+First we need to check if the distribution of the variable follow a normal law - which is the H0 hypothesis - is valid.
+
+A rapid and graphical test is to check the Q-Q plot (droite d'henry):
+
+```{r}
+qqnorm(iris$Sepal.Length, main = "Normal Q-Q Plot of the Global Sepal Length distribution")
+qqline(iris$Sepal.Length, col="red")
+
+```
+
+Also with `ggplot`:
+
+```{r}
+ggplot(iris, aes(sample = Sepal.Length, colour = Species)) +
+  stat_qq() +
+  stat_qq_line()+
+  theme_light()+
+  xlab("Samples Quantiles")+
+  ylab("Theorical Quantiles")+
+  labs(title="Normal Q-Q Plot of the Sepal Length distribution for each Species")
+
+```
+
+The visual data analysis is not sufficient to proof the normality of the distribution. It is mandatory to complete by a statistical test in order to check the validation of the H0 hypothesis. If the test is significant (p-value \< 0.05), the distribution is not normal. So the failure of the Significant test (p-value \> 0.05) results on the normality of the distribution.
+
+The normal test is sensitive to the sample length. Small effective usually pass the test. That why the visual inspection AND the normal test must to be performed.
+
+### Shapiro-Wilk test
+
+In R, this test is performed with the command `shapiro_test()` include in the `rstatix` package directly installed with the classic distribution of R.
+
+*For One variable*
+
+```{r}
+library(rstatix)
+shapiro_test(iris, Sepal.Length)
+```
+
+Here p-value \> 0.05 ==\> The test is not significant ==\> H0 is validate. The global distribution of the Sepal length follow a normal law.
+
+*Variables classify by group*
+
+```{r}
+iris %>%
+  group_by(Species) %>%
+  shapiro_test(Sepal.Length)
+```
+
+Note, here the \``tidyverse`\` library is use in order to manipulate the data
+
+*For multiple variables*
+
+```{r}
+shapiro_test(iris, Sepal.Length, Petal.Width)
+```
+
+Here the p-value of the Petal width is \< 0.05 ==\> Significant test ==\> H0 rejected. The global distribution of the Petal width do not follow a normal law. This is can be checked by a simple Q-Q plot:
+
+```{r echo=FALSE}
+qqnorm(iris$Petal.Width, main = "Normal Q-Q Plot of the Global Petal Width distribution")
+qqline(iris$Petal.Width, col = "red")
+
+```
+
+### Kolmogorov-Smirnov: an adequation test
+
+Here the normality test is a particular case of the test.
+
+In general this test enable to check the hypothesis that a sample follows of given CDF (normal, binary...) or if two samples follow a same law (normal, binary...).
+
+*1) Creation of samples*
+
+```{r}
+a<-rnorm(100,mean=0,sd=1) # a normal law with 100 variables
+b<-rgamma(100,shape=1,rate=0.8) # a other law 
+c<-rnorm(50,mean=0,sd=1) # the same normal law of a
+d<-rnorm(50, mean=2, sd=1) # a second normal law but not with the same CDF
+```
+*2) Do a & b follow the same law ?*
+
+```{r}
+ks.test(a,b)
+```
+The p-value is very weak (<0.05) ==> Significant test ==> H0 rejected ==> The samples do not follow the same law
+
+*2) Does a follow a normal law ?*
+
+```{r}
+ks.test(a,"pnorm") # Any normal law
+ks.test(a,"pnorm",0,1) # A particular normal law define by a mean 0 & a sd 1
+ks.test(a,"pnorm",2,1) # A particular normal law define by a mean 2 & a sd 1
+```
+For the two first p-value > 0.05, the test is not significant ==> H0 validate .
+The last one, p-value < 0.05 ==> a does not follow this particular law.
+
+*3) Do a, c & d follow the same normal law ?*
+
+```{r}
+ks.test(a,c)
+ks.test(a,d)
+```
+a & c follow the same normal law. Not d.
+
+
+## The **Student** test
+
+This test is performed to compare the equality of two means. The H0 hypothesis is that $µ_{1}=µ_{2}$.
 
 ## Test de **Fisher**
 
