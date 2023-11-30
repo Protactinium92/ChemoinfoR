@@ -291,6 +291,7 @@ paste(signif(x_ICmin,3),"<",signif(x_mu,3),"<",signif(x_ICmax,3))
 
 The command `signif(variable, number)` print the `variable` with the `number` of significant value asked.
 
+
 ------------------------------------------------------------------------
 
 # Evaluation of probability law
@@ -374,6 +375,50 @@ The formula of the Poisson law is: $$\mathbb{P}(X = k) = \frac{e^{-\lambda} \lam
 
 ```{r}
 factorial(5)
+```
+
+## Evaluation of the shape of a distrbution
+
+It is possible to measurement of the shape of the distribution thanks to library `moment`:
+
+```{r}
+library("moments")
+```
+
+### Skewness: Asymetri
+
+The Skewness moment gives some information about the symmetry of the distribution:
+
+-   **0** ==> No skewness : distribution perfectly symmetrical
+-   **>0** ==> The tail is on the right side of the distribution, the majority of the values is on the left compare to the mean and outlier on the right
+-   **<0** ==> The tail is on the left side of the distribution, the majority of the values is on the rigth compare to the mean and outlier on the left
+
+```{r}
+virginica <- subset(iris, Species == "virginica")
+skewness(virginica$Sepal.Length, na.rm = TRUE)
+```
+Which can be see in this graph with the mean in red:
+
+```{r echo=FALSE}
+library("ggplot2")
+mean_value <- mean(virginica$Sepal.Length)
+ggplot(virginica, aes(x= Sepal.Length))+
+  geom_density(linewidth = 1, fill = "lightgreen", col="darkgreen", alpha=0.5)+ #show the density of each disribution
+  geom_vline(xintercept = mean_value, linetype = "dashed", color = "red")+
+  theme_classic()
+```
+
+### Kurtosys: Thickness of the tail
+
+The Kurtosys moment measure how the tails is heavy or flat.
+
+-   **3** ==> Represent a normal distribution
+-   **>3** ==> TThe data distribution is  eptokurtic, which means it tends to produce more outliers than the normal distribution
+-   **<3** ==> The data distribution is platykurtic, which means it tends to produce fewer and less extreme outliers than the normal distribution
+
+```{r}
+virginica <- subset(iris, Species == "virginica")
+kurtosis(virginica$Sepal.Length, na.rm = TRUE)
 ```
 
 ------------------------------------------------------------------------
@@ -525,7 +570,7 @@ ggplot(iris, aes(x= Sepal.Length))+
                  position = "identity",
                  alpha = 0.4,
                  )+ # bins number of interval un the histogram
-  geom_density(aes(color = Species), size = 1)+ #show the density of each disribution
+  geom_density(aes(color = Species), linewidth = 1)+#show the density of each disribution
   stat_function(fun=dnorm,args=c(mean=mean(iris$Sepal.Length),sd=sd(iris$Sepal.Length)), #show the normal law theortic for the global distribution
                 color ="red", 
                 linewidth = 0.1)+
@@ -535,7 +580,7 @@ ggplot(iris, aes(x= Sepal.Length))+
 
 ```
 
-## The box-plot
+## The Box-plot
 
 The boxplot can represent the distribution of the observation in function of the group. It gives also the quantile, the mean and the median information.
 
@@ -549,15 +594,16 @@ boxplot(iris$Sepal.Length~iris$Species,ylab="Sepal Length",xlab="Species")
 With `ggplot2` use `geom.boxplot()`:
 
 ```{r}
-p <- ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species))+
+p <- ggplot(iris, aes(x=Species, y=Sepal.Length, fill=Species, color = Species))+
   ylim(4,8)+
   ylab("Sepal Length")+ 
-  geom_boxplot(alpha=0.7, #alpha for the transparence,
+  geom_boxplot(alpha=0.5, # alpha for the transparence,
                outlier.colour="red",
-               outlier.shape=8,outlier.size=4) +
-  stat_summary(fun = mean, geom="point", shape=20, size=8, color="Yellow") +
-  geom_point(position="jitter", color="blue", alpha=.5)+
-  scale_fill_brewer(palette="Set2")+
+               outlier.shape=8,outlier.size=4 # Note, outlier are shown twice 
+               #outlier.alpha=0 to not represent the outlier twices
+               ) +
+  stat_summary(fun = mean, geom="point", shape=18, size=5, color="white") +
+  geom_point(position="jitter", alpha=.5)+
   theme_classic()
 p
 ```
@@ -625,7 +671,10 @@ ggplot(iris, aes(sample = Sepal.Length, colour = Species)) +
 
 The visual data analysis is not sufficient to proof the normality of the distribution. It is mandatory to complete by a statistical test in order to check the validation of the H0 hypothesis. If the test is significant (p-value \< 0.05), the distribution is not normal. So the failure of the Significant test (p-value \> 0.05) results on the normality of the distribution.
 
-The normal test is sensitive to the sample length. Small effective usually pass the test. That why the visual inspection AND the normal test must to be performed.
+The normal test is sensitive to the sample length. Small effective usually pass the test. That why, both the visual inspection AND the normal test must to be performed.
+
+*Remark:*\
+*In reality, if the H0 hypothesis is NOT rejected, we can not affirm that the sample follow a normal law. Indeed, it is impossible to validate at 100% a theory because there are too many possibility. However, if the test is rejected in the given condition, this fact is certain*
 
 ### Shapiro-Wilk test
 
@@ -678,12 +727,14 @@ b<-rgamma(100,shape=1,rate=0.8) # a other law
 c<-rnorm(50,mean=0,sd=1) # the same normal law of a
 d<-rnorm(50, mean=2, sd=1) # a second normal law but not with the same CDF
 ```
+
 *2) Do a & b follow the same law ?*
 
 ```{r}
 ks.test(a,b)
 ```
-The p-value is very weak (<0.05) ==> Significant test ==> H0 rejected ==> The samples do not follow the same law
+
+The p-value is very weak (\<0.05) ==\> Significant test ==\> H0 rejected ==\> The samples do not follow the same law
 
 *2) Does a follow a normal law ?*
 
@@ -692,8 +743,8 @@ ks.test(a,"pnorm") # Any normal law
 ks.test(a,"pnorm",0,1) # A particular normal law define by a mean 0 & a sd 1
 ks.test(a,"pnorm",2,1) # A particular normal law define by a mean 2 & a sd 1
 ```
-For the two first p-value > 0.05, the test is not significant ==> H0 validate .
-The last one, p-value < 0.05 ==> a does not follow this particular law.
+
+For the two first p-value \> 0.05, the test is not significant ==\> H0 validate . The last one, p-value \< 0.05 ==\> a does not follow this particular law.
 
 *3) Do a, c & d follow the same normal law ?*
 
@@ -701,13 +752,60 @@ The last one, p-value < 0.05 ==> a does not follow this particular law.
 ks.test(a,c)
 ks.test(a,d)
 ```
+
 a & c follow the same normal law. Not d.
 
+## The **Fisher** test: F-test
 
-## The **Student** test
+This test is performed to compare the equality of two variances. The H0 hypothesis is that $H_0:\sigma^{2}_{1}=\sigma^{2}_{2}$. 
 
-This test is performed to compare the equality of two means. The H0 hypothesis is that $µ_{1}=µ_{2}$.
+[**WARNING**]{style="color:red;"}:\
+This test should not be confused with Fisher's exact test, which is performed to compare the dependence of several groups (cf. ANOVA below).
 
-## Test de **Fisher**
+```{r}
+setosa <- subset(iris, Species == "setosa")
+virginica <- subset(iris, Species == "virginica")
+versicolor <- subset(iris, Species == "versicolor")
+var.test(setosa$Sepal.Width, virginica$Sepal.Width,conf.level = 0.95) # with a bilateral risk of 5%
+```
+Here the p-value is superior to 0.05: H0 is not rejected.
 
-voir la library `moment` kurtosis skweness
+```{r}
+var.test(virginica$Sepal.Length, virginica$Sepal.Width,conf.level = 0.95) # with a bilateral risk of 5%
+```
+Here the p-value is largely under 0.05. The H0 hypothesis is rejected, that mean that the variance between this two categories are different
+
+## Comparison of the mean
+
+### The **Student** test: t-test
+
+This test is performed to compare the equality of two means. The H0 hypothesis is that $H_0:µ_{1}=µ_{2}$. In other words, are the populations from which the samples were taken the same?.\
+
+This test need 3 conditions:
+
+1)    n > 8
+2)    The samples must to follow the normal law (shapiro_test)
+3)    The variances must to be equal (F-test) ==> Use the argument `var.equal = TRUE`  
+
+Then we can performed the t test.
+
+```{r}
+t.test(setosa$Sepal.Width, virginica$Sepal.Width,conf.level = 0.95, var.equal = TRUE)
+```
+Here the p-value is largely under 0.05. The H0 hypothesis is rejected, that mean that the means of this two categories are different.
+
+If the variances between the two is not equal ==> Use the **Welch approximation** with `var.equal = FALSE` 
+
+```{r}
+t.test(virginica$Sepal.Length, virginica$Sepal.Width, conf.level = 0.95, var.equal = FALSE)
+```
+
+### The **Wilcoxon** test
+
+When the distribution doesn't follow a normal law, or if n < 8, it is possible to use the Wilcoxon test:
+
+```{r}
+wilcox.test(iris$Petal.Length, iris$Petal.Width, conf.level = 0.95)
+```
+*Note that the Wilcoxon test does not give the resultats over the mean but by ranking the variables*
+
