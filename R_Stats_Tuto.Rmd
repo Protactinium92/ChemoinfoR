@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ------------------------------------------------------------------------
 
-# 
+# Prerequisites
 
 ## R Markdown
 
@@ -291,7 +291,6 @@ paste(signif(x_ICmin,3),"<",signif(x_mu,3),"<",signif(x_ICmax,3))
 
 The command `signif(variable, number)` print the `variable` with the `number` of significant value asked.
 
-
 ------------------------------------------------------------------------
 
 # Evaluation of probability law
@@ -389,14 +388,15 @@ library("moments")
 
 The Skewness moment gives some information about the symmetry of the distribution:
 
--   **0** ==> No skewness : distribution perfectly symmetrical
--   **>0** ==> The tail is on the right side of the distribution, the majority of the values is on the left compare to the mean and outlier on the right
--   **<0** ==> The tail is on the left side of the distribution, the majority of the values is on the rigth compare to the mean and outlier on the left
+-   **0** ==\> No skewness : distribution perfectly symmetrical
+-   **\>0** ==\> The tail is on the right side of the distribution, the majority of the values is on the left compare to the mean and outlier on the right
+-   **\<0** ==\> The tail is on the left side of the distribution, the majority of the values is on the rigth compare to the mean and outlier on the left
 
 ```{r}
 virginica <- subset(iris, Species == "virginica")
 skewness(virginica$Sepal.Length, na.rm = TRUE)
 ```
+
 Which can be see in this graph with the mean in red:
 
 ```{r echo=FALSE}
@@ -412,9 +412,9 @@ ggplot(virginica, aes(x= Sepal.Length))+
 
 The Kurtosys moment measure how the tails is heavy or flat.
 
--   **3** ==> Represent a normal distribution
--   **>3** ==> TThe data distribution is  eptokurtic, which means it tends to produce more outliers than the normal distribution
--   **<3** ==> The data distribution is platykurtic, which means it tends to produce fewer and less extreme outliers than the normal distribution
+-   **3** ==\> Represent a normal distribution
+-   **\>3** ==\> TThe data distribution is eptokurtic, which means it tends to produce more outliers than the normal distribution
+-   **\<3** ==\> The data distribution is platykurtic, which means it tends to produce fewer and less extreme outliers than the normal distribution
 
 ```{r}
 virginica <- subset(iris, Species == "virginica")
@@ -462,7 +462,7 @@ ggplot()+ # start plot
 
 Here `stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg)` is used to draw a function (*the CDF of a normal law in this case*). Then a second curve is added with the parameter `geom` to display the area under the curve.
 
-## The point_plot:
+## The point plot:
 
 ```{r echo=FALSE}
 
@@ -538,18 +538,30 @@ More complicate, the case of 2 continue variables y. It is not possible at this 
 -   **columns_to_gather** ==\> y variables of the original data frame that it needed to be merged, separate by `,`\
 
 ```{r}
+# Formatage of the data thanks to the library tidyr
 library(tidyr)
 reformat <- gather(iris, key = "Part_flower", value = "Length", Sepal.Length, Petal.Length)
 head(reformat)
 
-ggplot(reformat, aes(x = Species, y = Length, fill=Part_flower))+
-  geom_bar(stat = "identity", position=position_dodge())+
+# Work on the mean and Standard deviation
+reformat.summary <- reformat %>%
+  group_by(Part_flower, Species) %>%
+  summarise( sd = sd(Length), len = mean(Length))
+reformat.summary
+
+# Plot 
+ggplot(reformat.summary, aes(x = Species, y = len, fill=Part_flower))+
+  geom_bar(stat = "identity", position=position_dodge(0.8), width = 0.7)+
+  geom_errorbar(
+    aes(ymin = len-sd, ymax = len+sd, group = Part_flower),
+    width = 0.2, position = position_dodge(0.8)
+    )+
+  labs(title="Average of the Petal and Sepal Lenght in function of the Species")+
   theme_test()
 ```
 
 More inspiring barplot : <https://www.datanovia.com/en/fr/lessons/ggplot-barplot/>
 
-*Remark: it is not the best graph to describe the iris database*
 
 ## The Histogram
 
@@ -757,10 +769,9 @@ a & c follow the same normal law. Not d.
 
 ## The **Fisher** test: F-test
 
-This test is performed to compare the equality of two variances. The H0 hypothesis is that $H_0:\sigma^{2}_{1}=\sigma^{2}_{2}$. 
+This test is performed to compare the equality of two variances. The H0 hypothesis is that $H_0:\sigma^{2}_{1}=\sigma^{2}_{2}$.
 
-[**WARNING**]{style="color:red;"}:\
-This test should not be confused with Fisher's exact test, which is performed to compare the dependence of several groups (cf. ANOVA below).
+The F-test of fisher is given by the formula below (with $DF$ degree of freedom): $$ F = \frac{\frac{\sigma_1^2}{DF_1}}{\frac{\sigma_2^2}{DF_2}} $$
 
 ```{r}
 setosa <- subset(iris, Species == "setosa")
@@ -768,12 +779,21 @@ virginica <- subset(iris, Species == "virginica")
 versicolor <- subset(iris, Species == "versicolor")
 var.test(setosa$Sepal.Width, virginica$Sepal.Width,conf.level = 0.95) # with a bilateral risk of 5%
 ```
+
 Here the p-value is superior to 0.05: H0 is not rejected.
 
 ```{r}
 var.test(virginica$Sepal.Length, virginica$Sepal.Width,conf.level = 0.95) # with a bilateral risk of 5%
 ```
-Here the p-value is largely under 0.05. The H0 hypothesis is rejected, that mean that the variance between this two categories are different
+
+Here the p-value is largely under 0.05. The H0 hypothesis is rejected, that mean that the variance between this two categories are different.
+
+[**WARNING**]{style="color:red;"}:\
+This test should not be confused with Fisher's exact test or the Fisher test for the independence, which is performed to compare the dependence of several groups:
+
+-   The exact test of Fisher is used for sa contingent tables cf. $\chi^{2}$ test
+-   The F-test of variance compare the variance of two different groups individual
+-   The F-test of independence use also the variance but compare one group with all the other group cf. ANOVA
 
 ## Comparison of the mean
 
@@ -783,18 +803,19 @@ This test is performed to compare the equality of two means. The H0 hypothesis i
 
 This test need 3 conditions:
 
-1)    n > 8
-2)    The samples must to follow the normal law (shapiro_test)
-3)    The variances must to be equal (F-test) ==> Use the argument `var.equal = TRUE`  
+1)  n \> 8
+2)  The samples must to follow the normal law (shapiro_test)
+3)  The variances must to be equal (F-test) ==\> Use the argument `var.equal = TRUE`
 
 Then we can performed the t test.
 
 ```{r}
 t.test(setosa$Sepal.Width, virginica$Sepal.Width,conf.level = 0.95, var.equal = TRUE)
 ```
+
 Here the p-value is largely under 0.05. The H0 hypothesis is rejected, that mean that the means of this two categories are different.
 
-If the variances between the two is not equal ==> Use the **Welch approximation** with `var.equal = FALSE` 
+If the variances between the two is not equal ==\> Use the **Welch approximation** with `var.equal = FALSE`
 
 ```{r}
 t.test(virginica$Sepal.Length, virginica$Sepal.Width, conf.level = 0.95, var.equal = FALSE)
@@ -802,10 +823,179 @@ t.test(virginica$Sepal.Length, virginica$Sepal.Width, conf.level = 0.95, var.equ
 
 ### The **Wilcoxon** test
 
-When the distribution doesn't follow a normal law, or if n < 8, it is possible to use the Wilcoxon test:
+When the distribution doesn't follow a normal law, or if n \< 8, it is possible to use the Wilcoxon test:
 
 ```{r}
 wilcox.test(iris$Petal.Length, iris$Petal.Width, conf.level = 0.95)
 ```
+
 *Note that the Wilcoxon test does not give the resultats over the mean but by ranking the variables*
 
+------------------------------------------------------------------------
+
+# Detection of Outliers
+
+Outlier can be detected with barplot. However, it can be performed with a statistical test. In R, the detection of outliers is performed thanks to library `outliers`.
+
+```{r echo=FALSE}
+library("outliers")
+```
+
+## Dixon test: Q-test
+
+The Dixon test can be used for the small samples and evaluate the outliers by comparison of distances a between a suspect point and the measurement nearest to it in size with the range of the measurements. Thus, the H0 hypothesis is: the value is not an outlier.
+
+```{r echo=FALSE}
+data_for_dixon <- c(10, 12, 13, 14, 15, 16, 17, 18, 19, 200)
+dixon.test(data_for_dixon)
+```
+
+The Dixon test is performed one by one, that means if there are 2 or more variables, the test must be performed until that the p-value is higher than 0.05.
+
+```{r}
+# dataset
+data_for_dixon <- c(-1000, 10, 12, 13, 14, 15, 16, 17, 18, 19,200.5)
+
+# initialization of pvalue to enter into the loop
+pvalue <- 0
+
+# loop while until the p-value is > 0.05
+while(pvalue < 0.05){
+  #test
+  result_dixon <- dixon.test(data_for_dixon)
+  pvalue <- result_dixon$p.value # catch the p-value in variable
+  
+  # if pvalue is under 0.05 ==> remove the outlier
+  if (pvalue <0.05){
+    # catch the outlier in variable:
+    #     $alternative is a chain of character
+    #     Split into a list and select the 3erd word
+    #     Convert into a numeric value
+    val_outlier <- as.numeric(strsplit(result_dixon$alternative, " ")[[1]][3]) 
+    
+    # Remove the outlier
+    data_for_dixon <- data_for_dixon[-which(data_for_dixon==val_outlier)]
+  }
+  # Printing
+  print(result_dixon)
+  print(data_for_dixon)
+}
+```
+
+## The Grubbs test
+
+When the dataset has more than 30 values, the Dixon test does not work:
+
+```{r eval=FALSE}
+  dixon.test(versicolor$Sepal.Length)
+```
+
+```{r echo=FALSE}
+result<- tryCatch({
+  dixon.test(versicolor$Sepal.Length)},
+  error = function(e) {
+  # Bloc exécuté en cas d'erreur
+  cat("Une erreur s'est produite :", conditionMessage(e), "\n")
+  NULL  # Retourne une valeur pour continuer l'exécutio
+  })
+```
+
+In this case, the Grubbs test is more useful. The test is also performed one by one. So to remove all the outliers, we need to process by iteration like theDixon test before.
+
+```{r}
+grubbs.test(versicolor$Sepal.Length)
+grubbs.test(virginica$Sepal.Length)
+boxplot(virginica$Sepal.Length)
+```
+
+# ANOVA
+
+**The analysis of variance**. The purpose of this test is to find which factor has an impact on the variance. This analysis is based on the test of Fisher. This is closed to the F-test of variance. Except that the comparison is not performed on two individual groups but compare the variance between all the group over the variance inside one group:
+
+$$ F = \frac{\frac{\sigma_{inter}^2}{DF_{inter}}}{\frac{\sigma_{intra}^2}{DF_{intra}}} $$\
+
+With $\sigma_{inter}^2$ the variance inter (betwenn) group: $\sigma_{inter}^2=\sum(mean_{group}-mean_{total})^2$\
+And $\sigma_{intra}^2$ the variance in a particular group $\sigma_{intra}^2=\sum(x_{i}-\overline{x_{group}})^2$
+
+ANOVA assumes that the observations are independent, follow a normal law  and there is no significant outlier. The H0 hypothesis:
+
+-   H0: Groups are independent ==> No effect of the factor <=> means are equal
+-   H1: Groups are not independent ==> Significant effect <=> means not are equal
+
+## One-way ANOVA
+
+ANOVA, in R, is performed thanks to the command `aov(observation~factor, dataset)`. The results can be shown thanks to the command `summary.aov`.
+
+```{r}
+species_anova <- aov(Sepal.Length~Species, iris)
+summary.aov(species_anova)
+```
+
+Here the p-value is under 0.05. That means that the H0 is rejected. The factor Species has significant impact on the Sepal length.
+
+## Two-way ANOVA
+
+For this example, the dataset `ToothGrowth` is used, and it is assume that all the condition for the ANOVA are OK. This dataset examines the tooth growth length in guinea pigs based on the dosage and supplementation of vitamin C. 
+
+The two-way ANOVA, in R, is performed with the same command than the one-way. The interaction between the two factors are add with the symbol `*` between the 2 factors: `aov(observation~factor1*factor2, dataset)`.
+
+```{r}
+summary(ToothGrowth)
+ToothGrowth$dose <- as.factor(ToothGrowth$dose) # dose is numeric ==> Conversion as a factor
+summary(ToothGrowth)
+
+# 2-way ANOVA
+tooth_anova <- aov(len~supp*dose,ToothGrowth)
+summary.aov(tooth_anova)
+```
+Here the p-value is under 0.05 for both spplementation and the dosage of vitamin C. That means that the H0 is rejected. This two factors have a significant impact. In the same time, the impact of the interaction between this two factor is also significant (p-value <0.05).
+
+### Graph analysis of the ToothGrowth with ggarrange()
+
+```{r echo=FALSE}
+# remove the message error summarise()` has grouped output by 'dose'. You can override using the .groups` argument.
+options(dplyr.summarise.inform = FALSE) 
+```
+
+```{r}
+# Setp 1 cheration of the theme
+theme_set(
+  theme_classic() +
+    theme(legend.position = "top")
+  )
+my3cols <- c("#2E9FDF", "#FC4E07", "#E7B800")
+
+# Prepar
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+df.summary <- ToothGrowth %>%
+  group_by(dose,supp) %>%
+  summarise(sd = sd(len, na.rm = TRUE), len = mean(len))
+
+# Step 2 Creation of the different graphs
+
+# 1- The box plot
+bxp <- ggplot(ToothGrowth, aes(x = dose, y = len))+ geom_boxplot(aes(color = supp)) +
+  scale_color_manual(values = my3cols)
+
+# 3- line plot
+lin <- ggplot(df.summary, aes(dose, len)) +
+  geom_line(aes(linetype = supp, group = supp, color=supp))+
+  geom_point()+
+  geom_errorbar(
+    aes(ymin = len-sd, ymax = len+sd, group = supp, color=supp),
+    width = 0.2
+  )+
+  scale_color_manual(values = my3cols)
+
+# STeo 3 pool the graphs together 
+
+library("ggpubr")
+
+figure <- ggarrange(bxp, lin,
+                    labels = c("A", "B"),
+                    ncol = 2, nrow = 1,
+                    common.legend = TRUE,
+                    legend = "right")
+figure
+
+```
