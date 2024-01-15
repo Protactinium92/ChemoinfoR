@@ -1,7 +1,7 @@
 ---
 title: "R Stats Tuto"
 author: "Pierre-Alexandre"
-date: "2023-10-11"
+date: "2023-12-26"
 output:
   html_document:
     pandoc_args: ["--extract-media", "."]
@@ -14,6 +14,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.align='center')
 ```
 
 ------------------------------------------------------------------------
@@ -67,8 +68,8 @@ library("tibble")
 An other way consist to put all the library desired in a variable thank to a vector (see below), then upload it with the function `lapply` as it is showed below:
 
 ```{r eval =FALSE}
-x <- c("readr","tibble","tidyr","ggplot2","dplyr", "factoextra", "FactoMineR",
-       "rgl", "colorspace","ggthemes","ggpubr", "readxl")
+x <- c("readr","tibble","tidyr","ggplot2","dplyr", "factoextra",
+       "FactoMineR", "rgl", "colorspace","ggthemes","ggpubr", "readxl")
 lapply(x,require,character.only = T)
 ```
 
@@ -260,10 +261,14 @@ FD2 <- data.frame(apply(Tab.aDeriver[,-1],2,function(x){ #apply fwork as a loop,
 ```
 
 
-**Play with `tidyr` & `dplyr` libraries and functional programming**
+**Play with `tidyr` & `dplyr` libraries and functional programming**\
+
+This libraries allow to make a code more "readable" thanks to `%>%` symbols.
 
 ```{r}
-m1b<-Si2 %>% filter(method == "method1") %>% select(values) %>% unlist()
+m1b<-Si2 %>% filter(method == "method1") %>%
+  select(values) %>%
+  unlist()
 m1
 m1b
 ```
@@ -372,7 +377,7 @@ The **Cumulative Density Function** has remarkable properties:
 
 ### *Student distribution*
 
-
+One day may be 
 
 
 
@@ -501,7 +506,7 @@ ggplot()+ # start plot
   theme(plot.title = element_text(hjust = 0.5, color = "blue"))
 ```
 
-Here `stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg)` is used to draw a function (*the CDF of a normal law in this case*). Then a second curve is added with the parameter `geom` to display the area under the curve.
+Here `stat_function(fun=pnorm,args=c(mean=my_mu,sd=my_sg)` is used to draw a function (*the CDF of a normal law in this case*). The parameter `fun=` gives the function to draw, and `args=` take the parameters of this function as arguments. Then a second curve is added with the parameter `geom` to display the area under the curve.
 
 ## The point plot:
 
@@ -832,7 +837,7 @@ Here the p-value is largely under 0.05. The H0 hypothesis is rejected, that mean
 [**WARNING**]{style="color:red;"}:\
 This test should not be confused with Fisher's exact test or the Fisher test for the independence, which is performed to compare the dependence of several groups:
 
--   The exact test of Fisher is used for sa contingent tables cf. $\chi^{2}$ test
+-   The exact test of Fisher is used for a contingent tables cf. $\chi^{2}$ test
 -   The F-test of variance compare the variance of two different groups individual
 -   The F-test of independence use also the variance but compare one group with all the other group cf. ANOVA
 
@@ -991,7 +996,10 @@ summary(ToothGrowth)
 tooth_anova <- aov(len~supp*dose,ToothGrowth)
 summary.aov(tooth_anova)
 ```
-Here the p-value is under 0.05 for both spplementation and the dosage of vitamin C. That means that the H0 is rejected. This two factors have a significant impact. In the same time, the impact of the interaction between this two factor is also significant (p-value <0.05).
+
+Here the p-value is under 0.05 for both supplementation and the dosage of vitamin C. That means that the H0 is rejected. This two factors have a significant impact. In the same time, the impact of the interaction between this two factor is also significant (p-value <0.05).
+
+The Two-way ANOVA can also be performe without cross interaction. In this case the symbol `*` is replaced by `+` 
 
 ### Graph analysis of the ToothGrowth with ggarrange()
 
@@ -1089,35 +1097,58 @@ ggpar(graph1, title = "PCA of the Decathlon Dataset",
       legend = "right",
       legend.title = "Competition")
 ```
+
 It could be interesting to see the sree plot
 
 ```{r}
 # Scree plot
 fviz_eig(pca.decat, addlabels =TRUE)
 ```
+\
 3D plot
 
 ```{r eval=FALSE}
 library("rgl")
+# Convert the group as a vector
+decathlon$Competition <- factor(decathlon$Competition)
+
+
 #  3 D dans R
 plot3d(pca.decat$ind$coord[,1],
        pca.decat$ind$coord[,2],
        pca.decat$ind$coord[,3],
-       xlab="Dim1",ylab="Dim2",zlab="Dim3")
+       xlab="Dim1",ylab="Dim2",zlab="Dim3",
+       col = rainbow(length(levels(decathlon$Competition))),
+       type="s",radius=0.1)
+
+# Add legend
+legend3d("topright", legend = levels(decathlon$Competition),
+         col = rainbow(length(levels(decathlon$Competition))),
+         pch = 16, cex = 1.2)
 ```
 
 *Remark a new windows will appears.*\
-With the code below and a GIMP software, it is possible to create an animation of the 3D picture.
+\
+With the code below and a GIMP software - or with online GIF creator website like [here](https://creer-gif.pdf-convertisseur.fr/) - it is possible to create an animation of the 3D picture. *The 3D plot above need to be done before*
 
 ```{r eval=FALSE}
-setwd("C:/Users/hpier/Documents/code/R/ChemoinfoR_tuto")
+setwd("C:/Users/hpier/Documents/code/R/ChemoinfoR_tuto/3D")
 for (i in 1:360) {
-  par3d(i, 20) ;
+  rgl.viewpoint(i, 20) ; ;
   filename <- paste("pic", formatC(i, digits = 1, flag = "0"), ".png", sep = "") 
   rgl.snapshot(filename) } ;
   getwd()
 
 ```
+
+*Remark: rgl.viewpoint is obsoleted* 
+
+<center>
+
+![GIF 3D of the Decathlon PCA](C:/Users/hpier/Documents/code/R/ChemoinfoR_tuto/3DPCA.gif)
+
+</center>
+
 
 # Linear Regression
 
@@ -1149,6 +1180,7 @@ abline(my_model, col="red")
 abline(my_model0, col="blue")
        
 ```
+
 ### Statisitcal analysis of the model
 
 ```{r}
@@ -1168,6 +1200,7 @@ ICmax_int<-interception + t95 * error_std # upper bound of IC(95) of intercept
 print(paste("Interception =",signif(interception,3), "in the interval of [",signif(ICmin_int,3),";",signif(ICmax_int,3),"]."))
 
 ```
+
 ### Prediction
 
 To predict new $Y$ from new value $x$
