@@ -1,4 +1,4 @@
 R tutorial 
 - Statitistic lectures M1 Chemoinformatics Strasbourg
 
-+ some usefull cheatsheet
++ Some usefull cheat sheet
