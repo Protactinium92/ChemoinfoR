@@ -1098,7 +1098,7 @@ ggpar(graph1, title = "PCA of the Decathlon Dataset",
       legend.title = "Competition")
 ```
 
-It could be interesting to see the sree plot
+It could be interesting to see the scree plot
 
 ```{r}
 # Scree plot
